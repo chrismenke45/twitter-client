@@ -1,3 +1,23 @@
+:root {
+  --user-pic-diameter: 48px; 
+  --grey-color: rgb(100,100,100);
+  --blue-color: #1DA1F2;
+  --black-color: rgb(31,31,31);
+  box-sizing: border-box;
+  font-size: 15px;
+  background-color: white;
+
+}
+/* Text Colors */
+.greyText {
+  color: var(--grey-color);
+}
+.blueText {
+  color: var(--blue-color);
+}
+.blackText {
+  color: var(--black-color);
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,8 +26,103 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+p {
+  margin: 0;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.development {
+  width: 400px;
+  max-width: 100%;
+  margin: auto;
+}
+
+/* Single Tweet */
+
+.singleTweetContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border: var(--grey-color) solid 1px;
+  width: 100%;
+}
+.singleTweetHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.userPicBox {
+  width: var(--user-pic-diameter);
+  height: var(--user-pic-diameter);
+  overflow: hidden;
+  border-radius: 50%;
+  position: relative;
+  margin: 10px;
+}
+.userPic {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+}
+.tweetContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.tweetContent > .tweetUser {
+  margin: 10px 0 3px 0;
+}
+/*.tweetContent > .tweetText {
+  margin: 3px 0 0 0;
+}*/
+.tweetContent > img {
+  margin: 5px 0 0 0;
+  border: var(--grey-color) solid .5px;
+  border-radius: 10px;
+}
+.singleTweetFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.footerIcon {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: var(--grey-color);
+}
+.footerIcon > * {
+  color: inherit;
+  padding: 5px;
+  border-radius: 50%;
+}
+.footerIcon > p {
+  font-size: 14px;
+  padding: none;
+}
+.commentIcon:hover {
+  color: #1DA1F2;
+}
+.commentIcon:hover .icon {
+  background-color: rgba(29, 161, 242, .2);
+}
+.retweetIcon:hover {
+  color: #10d441;
+}
+.retweetIcon:hover .icon {
+  background-color: rgba(16, 212, 65, .2);
+}
+.heartIcon:hover {
+  color: #ee2759;
+}
+.heartIcon:hover .icon {
+  background-color: rgba(238, 39, 89, .2);
 }

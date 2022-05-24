@@ -37,7 +37,30 @@ code {
 .development {
   width: 400px;
   max-width: 100%;
-  margin: auto;
+}
+.outerMost {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+button {
+  color: white;
+  background-color: #1DA1F2;
+  width: 75px;
+  height: 36px;
+  border-radius: 18px;
+  font-weight: bolder;
+  border: none;
+  margin: 10px;
+}
+::placeholder {
+  color: var(--grey-color);
+  opacity: 1;
+}
+textarea:focus, input:focus{
+  outline: 0;
 }
 
 /* Single Tweet */
@@ -46,8 +69,9 @@ code {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  border: var(--grey-color) solid 1px;
+  outline: var(--grey-color) solid 1px;
   width: 100%;
+  margin: 0 0 -1px 0;
 }
 .singleTweetHeader {
   display: flex;
@@ -125,4 +149,54 @@ code {
 }
 .heartIcon:hover .icon {
   background-color: rgba(238, 39, 89, .2);
+}
+/* Home top */
+
+.homeTopContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: var(--grey-color) solid 1px;
+  width: 100%;
+  margin: 0 0 -1px 0;
+}
+.homeTopTitle > h1 {
+  margin: 10px;
+  font-size: 20px;
+}
+.homeTopHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: -10px 0 0 0;
+  width: 100%;
+}
+.homeTopHeader > textarea {
+  margin: 20px 20px 0 0;
+  width: auto;
+  border: none;
+  font-family: inherit;
+  font-size: 20px;
+  color: inherit;
+  flex: 1;
+  resize: vertical;
+}
+.homeTopFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.homeTopFooter > span {
+  margin: 0 0 0 calc(var(--user-pic-diameter) + 20px);
+}
+ 
+/* Navbar */
+
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }

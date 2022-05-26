@@ -1,14 +1,14 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
-import { faHouse, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faUser, faHashtag } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
 const NavMargin = (props) => {
     return (
         <nav>
             <Link to='/home' className='routerLink'>
-                <FontAwesomeIcon icon={faTwitter} id="marginBird" className="" />
+                <FontAwesomeIcon icon={faTwitter} id="marginBird" className="navButton" />
             </Link>
             <Link to='/home' className='routerLink'>
                 <button className='navButton'>
@@ -20,6 +20,12 @@ const NavMargin = (props) => {
                 <button className='navButton'>
                     <FontAwesomeIcon icon={faUser} className="" />
                     <p>Profile</p>
+                </button>
+            </Link>
+            <Link to='/Discover' className='routerLink'>
+                <button className='navButton'>
+                    <FontAwesomeIcon icon={faHashtag} className="" />
+                    <p>Explore</p>
                 </button>
             </Link>
         </nav>

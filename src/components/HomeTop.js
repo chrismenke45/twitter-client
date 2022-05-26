@@ -8,7 +8,7 @@ function HomeTop() {
                 <h1>Home</h1>
             </div>
             <div className="homeTopHeader">
-                <div className="userPicBox">
+                <div className="userPicContainer">
                     <img src="https://imagescdn.wciu.com/kqf4I-1631201589-40-show-BOBS_BURGERS.jpg" alt="no img" className="userPic"></img>
                 </div>
                 <textarea name="tweetText" placeholder="What's Happening?" maxLength="140"></textarea>

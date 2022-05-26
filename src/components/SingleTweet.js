@@ -6,7 +6,7 @@ function SingleTweet() {
     return (
         <article className="singleTweetContainer">
             <div className="singleTweetHeader">
-                <div className="userPicBox">
+                <div className="userPicContainer">
                     <img src="https://imagescdn.wciu.com/kqf4I-1631201589-40-show-BOBS_BURGERS.jpg" alt="no img" className="userPic"></img>
                 </div>
                 <div className="tweetContent">

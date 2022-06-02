@@ -1,14 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import SearchMargin from "../components/SearchMargin";
-import TweetDisplay from "../components/TweetDisplay";
-import HomeTop from "../components/HomeTop";
+import SingleTweet from "../components/SingleTweet";
 import NavMargin from "../components/NavMargin";
+import ProfileTop from "../components/ProfileTop";
 
-import fetchTweets from "../functions/fetchTweets";
-
-const DiscoverPage = (props) => {
-    const { tweets, setTweets, loaded, setLoaded } = props
-    /*let tweetTests = [
+const ProfilePage = (props) => {
+    let tweetTests = [
         {
         text: 'This the text for the tweet test',
         author: {
@@ -30,24 +27,19 @@ const DiscoverPage = (props) => {
         },
         created: new Date('May 30, 2022 10:24:00'),
     }
-]*/
-useEffect(() => {
-    console.log('useeffect')
-    fetchTweets()
-    .then(tweetsArray => {
-        setTweets(tweetsArray)
-    })
-  }, [])
-
+]
     return (
         <div className="outerMost">
             <NavMargin />
             <div className="centerPage">
-                <HomeTop />
-                <TweetDisplay tweets={tweets}/>
+            <ProfileTop />
+            <SingleTweet tweet={tweetTests[0]}/>
+            </div>
+            <div className="expandable">
+
             </div>
             <SearchMargin />
         </div>
     )
 }
-export default DiscoverPage
+export default ProfilePage

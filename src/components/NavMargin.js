@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 const NavMargin = (props) => {
     return (
         <nav>
-            <Link to='/home' className='routerLink'>
+            <Link to='/login' className='routerLink'>
                 <FontAwesomeIcon icon={faTwitter} id="marginBird" className="navButton" />
             </Link>
             <Link to='/home' className='routerLink'>

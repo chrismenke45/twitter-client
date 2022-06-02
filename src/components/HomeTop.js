@@ -3,7 +3,7 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 function HomeTop() {
     return (
-        <form className="homeTopContainer">
+        <form className="topContainer">
             <div className='homeTopTitle'>
                 <h1>Home</h1>
             </div>
@@ -18,7 +18,7 @@ function HomeTop() {
                     <FontAwesomeIcon icon={faImage} className="blueText"/>
                     <input name="img" type="file" accept="image/png, image/jpeg" hidden="true"></input>
                 </span>
-                <button type='submit'>Tweet</button>
+                <button type='submit' className='typicalButton'>Tweet</button>
             </div>
         </form>
     );

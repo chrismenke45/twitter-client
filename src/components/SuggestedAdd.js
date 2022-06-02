@@ -2,14 +2,17 @@ import React from "react";
 
 
 const SuggestedAdd = (props) => {
+    const { suggestedUser } = props
     return (
         <div className="suggestedAddContainer">
-            <div className="userPicContainer">
-                <img src="https://imagescdn.wciu.com/kqf4I-1631201589-40-show-BOBS_BURGERS.jpg" alt="no img" className="userPic"></img>
-            </div>
-            <div>
-                <p>Bobby McGee</p>
-                <p className="greyText">@bobbymgee</p>
+            <div className="suggestedUser">
+                <div className="userPicContainer">
+                    <img src={suggestedUser.image} alt="" className="userPic"></img>
+                </div>
+                <div>
+                    <p>{suggestedUser.chosenName}</p>
+                    <p className="greyText">@{suggestedUser.username}</p>
+                </div>
             </div>
             <button>Follow</button>
         </div>

@@ -8,6 +8,7 @@ import {
 import DiscoverPage from "./pages/DiscoverPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import SetCredentials from "./components/SetCredentials";
 
 function App() {
   const [tweets, setTweets] = useState([]);
@@ -30,6 +31,10 @@ function App() {
         <Route
           path="/login"
           element={<LoginPage />}>
+        </Route>
+        <Route
+          path="/set-credentials"
+          element={<SetCredentials />}>
         </Route>
       </Routes>
     </BrowserRouter>

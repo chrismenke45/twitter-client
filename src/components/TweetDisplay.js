@@ -4,8 +4,8 @@ function TweetDisplay(props) {
     const { tweets } = props;
     
     return (
-        tweets.map((tweet, index) => {
-            return <SingleTweet tweet={tweet} key={index}/>
+        tweets.map((tweet) => {
+            return <SingleTweet tweet={tweet} key={tweet._id}/>
         })
     );
 }

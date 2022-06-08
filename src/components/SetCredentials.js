@@ -5,7 +5,6 @@ import { useNavigate, Link } from 'react-router-dom'
 
 
 function SetCredentials(props) {
-    let url = 'http://localhost:9000'
     function getCookie(name) {
         var re = new RegExp(name + "=([^;]+)");
         var value = re.exec(document.cookie);
@@ -13,9 +12,6 @@ function SetCredentials(props) {
     }
 let navigate = useNavigate()
     useEffect(() => {
-        //let token = JSON.parse(localStorage.getItem('blogJWTcm'))
-        //console.log(getCookie('jwt'))
-        console.log('user', decodeURIComponent(getCookie('user')))
         localStorage.setItem('twitterCloneJWT', getCookie('jwt'))
         localStorage.setItem('twitterCloneUser', decodeURIComponent(getCookie('user')))
         navigate('/')

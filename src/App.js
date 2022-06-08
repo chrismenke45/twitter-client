@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
+  useNavigate
 } from "react-router-dom";
 
 import DiscoverPage from "./pages/DiscoverPage";
@@ -10,9 +11,15 @@ import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import SetCredentials from "./components/SetCredentials";
 
+import getUser from "./functions/getUser";
+import checkForUser from "./functions/checkForUser";
+
 function App() {
   const [tweets, setTweets] = useState([]);
   const [loaded, setLoaded] = useState(false);
+
+
+
   return (
     <BrowserRouter>
       <Routes>
@@ -22,7 +29,8 @@ function App() {
             tweets={tweets}
             setTweets={setTweets}
             loaded={loaded}
-            setLoaded={setLoaded} />}>
+            setLoaded={setLoaded}
+          />}>
         </Route>
         <Route
           path="/profile"

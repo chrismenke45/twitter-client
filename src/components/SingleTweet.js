@@ -13,7 +13,7 @@ function SingleTweet(props) {
 
     let navigate = useNavigate();
 
-    const likeSubmit = (e) => {
+    const like = (e) => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
@@ -38,7 +38,7 @@ function SingleTweet(props) {
         navigate('/', { replace: true })
     }
 
-    const unlikeSubmit = (e) => {
+    const unlike = (e) => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
@@ -63,15 +63,15 @@ function SingleTweet(props) {
         navigate('/', { replace: true })
     }
 
-    const heartSubmit = (e) => {
+    const likeSubmit = (e) => {
         if (tweet.likes.includes(user.userObj._id)) {
-            unlikeSubmit(e);
+            unlike(e);
         } else {
-            likeSubmit(e);
+            like(e);
         }
     }
 
-    const retweetSubmit = (e) => {
+    const retweet = (e) => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
@@ -95,8 +95,37 @@ function SingleTweet(props) {
             })
         navigate('/', { replace: true })
     }
-    if (tweet.retweets && tweet.retweets) {
-        console.log(tweet.retweets.some(e => e.author === user.userObj._id))
+
+    const deleteRetweet = (e) => {
+        if (!checkForUser(user)) {
+            return navigate('/login')
+        }
+        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + e.target.dataset.tweetid + '/delete';
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `bearer ${(user ? user.jwt : null)}`
+            }
+        };
+        delete options.headers['Content-Type'];
+        fetch(url, options)
+            .then(() => {
+                setFireApiCall(prev => prev + 1)
+                navigate('/', { replace: true })
+            })
+            .catch(error => {
+                console.error('Error:', error)
+                navigate('/error')
+            })
+        navigate('/', { replace: true })
+    }
+    const retweetSubmit = (e) => {
+        if (tweet.retweets && tweet.retweets.some(e => e.author === user.userObj._id)) {
+            unlike(e);
+        } else {
+            like(e);
+        }
     }
 
     return (
@@ -112,21 +141,11 @@ function SingleTweet(props) {
                         :
                         null
                     }
-
-                    {/*<img src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png"></img>*/}
                     {tweet.img && tweet.img.data ?
                         <img className="displayImg" src={('data:image/' + tweet.img.contentType + ';base64,' + btoa(String.fromCharCode(...new Uint8Array(tweet.img.data.data))))}></img>
                         :
                         null
                     }
-                    {/*
-                    {tweet.img && tweet.img.data ?
-                        <img src={tweet.img.data}></img>
-                        :
-                        null
-                    }
-                    */}
-                    {/*<img src={tweet.img.data}></img>*/}
                 </div>
             </div>
             <div className="singleTweetFooter">
@@ -148,7 +167,7 @@ function SingleTweet(props) {
                     }
                 </span>
                 <span className="footerIcon heartIcon">
-                    <FontAwesomeIcon icon={faHeart} className={tweet.likes.includes(user.userObj._id) ? "icon liked" : "icon"} data-tweetid={tweet._id} onClick={heartSubmit} />
+                    <FontAwesomeIcon icon={faHeart} className={tweet.likes.includes(user.userObj._id) ? "icon liked" : "icon"} data-tweetid={tweet._id} onClick={likeSubmit} />
                     {tweet.likes.length ?
                         <p className="">{tweet.likes.length}</p>
                         :

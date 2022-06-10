@@ -1,11 +1,11 @@
 import SingleTweet from "./SingleTweet";
 
 function TweetDisplay(props) {
-    const { tweets } = props;
+    const { tweets, user, setFireApiCall } = props;
     
     return (
         tweets.map((tweet) => {
-            return <SingleTweet tweet={tweet} key={tweet._id}/>
+            return <SingleTweet tweet={tweet} user={user} setFireApiCall={setFireApiCall} key={tweet._id}/>
         })
     );
 }

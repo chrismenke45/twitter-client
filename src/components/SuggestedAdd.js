@@ -7,7 +7,7 @@ const SuggestedAdd = (props) => {
         <div className="suggestedAddContainer">
             <div className="suggestedUser">
                 <div className="userPicContainer">
-                    <img src={suggestedUser.image} alt="" className="userPic"></img>
+                    <img src={suggestedUser.profile_image} alt="" className="userPic"></img>
                 </div>
                 <div>
                     <p>{suggestedUser.chosenName}</p>

@@ -16,6 +16,7 @@ import checkForUser from "./functions/checkForUser";
 
 function App() {
   const [tweets, setTweets] = useState([]);
+  const [user, setUser] = useState({signedIn: false});
   const [loaded, setLoaded] = useState(false);
 
 
@@ -30,6 +31,8 @@ function App() {
             setTweets={setTweets}
             loaded={loaded}
             setLoaded={setLoaded}
+            user={user}
+            setUser={setUser}
           />}>
         </Route>
         <Route

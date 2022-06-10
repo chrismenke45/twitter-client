@@ -5,10 +5,9 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom';
 
 import checkForUser from '../functions/checkForUser';
-import getUser from '../functions/getUser';
-//import useCheckForUser from '../functions/useCheckForUser';
 
 function HomeTop(props) {
+    const { user } = props
     const [tweetInfo, setTweetInfo] = useState(
         {
             tweetText: '',
@@ -36,7 +35,6 @@ function HomeTop(props) {
 
     let tweetSubmit = (e) => {
         e.preventDefault();
-        let user = getUser()
         if (!checkForUser(user)) {
             return navigate('/login')
         }
@@ -61,7 +59,6 @@ function HomeTop(props) {
                     'Authorization': `bearer ${(user ? user.jwt : null)}`
                 }
             };
-            console.log(user)
             delete options.headers['Content-Type'];
             fetch(url, options)
                 .then(() => {
@@ -80,7 +77,8 @@ function HomeTop(props) {
             </div>
             <div className="homeTopHeader">
                 <div className="userPicContainer">
-                    <img src="https://imagescdn.wciu.com/kqf4I-1631201589-40-show-BOBS_BURGERS.jpg" alt="no img" className="userPic"></img>
+                <img src={user.userObj.profile_image} alt="no img" className="userPic"></img>
+                    {/*<img src="https://imagescdn.wciu.com/kqf4I-1631201589-40-show-BOBS_BURGERS.jpg" alt="no img" className="userPic"></img>*/}
                 </div>
                 <textarea name="tweetText" placeholder="What's Happening?" maxLength="140" value={tweetInfo.tweetText} onChange={e => handleTextChange(e)}></textarea>
             </div>

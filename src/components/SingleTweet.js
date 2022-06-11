@@ -9,7 +9,7 @@ import { faRetweet } from '@fortawesome/free-solid-svg-icons'
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 
 function SingleTweet(props) {
-    const { tweet, user, setFireApiCall } = props;
+    const { tweet, user, setFireApiCall, retweetInfo } = props;
 
     let navigate = useNavigate();
 
@@ -17,7 +17,7 @@ function SingleTweet(props) {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + e.target.dataset.tweetid + '/like';
+        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + tweet._id + '/like';
         const options = {
             method: 'PUT',
             headers: {
@@ -42,7 +42,7 @@ function SingleTweet(props) {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + e.target.dataset.tweetid + '/unlike';
+        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + tweet._id + '/unlike';
         const options = {
             method: 'PUT',
             headers: {
@@ -75,7 +75,7 @@ function SingleTweet(props) {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + e.target.dataset.tweetid + '/retweet';
+        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + tweet._id + '/retweet';
         const options = {
             method: 'POST',
             headers: {
@@ -100,7 +100,7 @@ function SingleTweet(props) {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + e.target.dataset.tweetid + '/delete';
+        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + (retweetInfo ? retweetInfo._id : tweet._id) + '/delete';
         const options = {
             method: 'DELETE',
             headers: {
@@ -122,14 +122,22 @@ function SingleTweet(props) {
     }
     const retweetSubmit = (e) => {
         if (tweet.retweets && tweet.retweets.some(e => e.author === user.userObj._id)) {
-            unlike(e);
+            deleteRetweet(e);
         } else {
-            like(e);
+            retweet(e);
         }
     }
 
     return (
         <article className="singleTweetContainer">
+            {retweetInfo && retweetInfo.author ?
+                <div className='retweetedBy greyColor'>
+                    <FontAwesomeIcon icon={faRetweet} />
+                    <p>{retweetInfo.author._id == user.userObj._id ? 'You' : user.userObj.chosenName} retweeted</p>
+                </div>
+                :
+                null
+            }
             <div className="singleTweetHeader">
                 <div className="userPicContainer">
                     <img src={tweet.author.profile_image} alt="no img" className="userPic"></img>
@@ -167,7 +175,7 @@ function SingleTweet(props) {
                     }
                 </span>
                 <span className="footerIcon heartIcon">
-                    <FontAwesomeIcon icon={faHeart} className={tweet.likes.includes(user.userObj._id) ? "icon liked" : "icon"} data-tweetid={tweet._id} onClick={likeSubmit} />
+                    <FontAwesomeIcon icon={faHeart} className={tweet.likes && tweet.likes.includes(user.userObj._id) ? "icon liked" : "icon"} data-tweetid={tweet._id} onClick={likeSubmit} />
                     {tweet.likes.length ?
                         <p className="">{tweet.likes.length}</p>
                         :

@@ -42,8 +42,8 @@ const DiscoverPage = (props) => {
             <NavMargin />
             {loaded ?
                 <div className="centerPage">
-                    <HomeTop user={user} />
-                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall}/>
+                    <HomeTop user={user} setFireApiCall={setFireApiCall} />
+                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />
                 </div>
                 :
                 <div className="spin centerPage">

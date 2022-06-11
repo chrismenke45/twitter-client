@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import checkForUser from '../functions/checkForUser';
 
 function HomeTop(props) {
-    const { user } = props
+    const { user, setFireApiCall } = props
     const [tweetInfo, setTweetInfo] = useState(
         {
             tweetText: '',
@@ -62,6 +62,11 @@ function HomeTop(props) {
             delete options.headers['Content-Type'];
             fetch(url, options)
                 .then(() => {
+                    setFireApiCall(prev => prev + 1)
+                    setTweetInfo({
+                        tweetText: '',
+                        img: null,
+                    })
                     navigate('/', { replace: true })
                 })
                 .catch(error => {

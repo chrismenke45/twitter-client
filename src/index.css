@@ -87,6 +87,25 @@ textarea:focus, input:focus{
   width: 99%;
   margin: 0 0 0 0;
 }
+
+.retweetedBy {
+  align-self: flex-start;
+  justify-self: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--grey-color);
+  margin: 5px 10px;
+}
+.retweetedBy > p {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 7px;
+}
+.retweetedBy > .icon {
+  font-size: 16px;
+}
 .singleTweetHeader {
   display: flex;
   flex-direction: row;

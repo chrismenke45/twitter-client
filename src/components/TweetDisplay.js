@@ -5,7 +5,13 @@ function TweetDisplay(props) {
     
     return (
         tweets.map((tweet) => {
-            return <SingleTweet tweet={tweet} user={user} setFireApiCall={setFireApiCall} key={tweet._id}/>
+            if (tweet.retweetOf) {
+                return <SingleTweet tweet={tweet.retweetOf} user={user} setFireApiCall={setFireApiCall} retweetInfo={tweet} key={tweet._id}/>
+            } else {
+                return <SingleTweet tweet={tweet} user={user} setFireApiCall={setFireApiCall} key={tweet._id}/>
+            }
+
+            
         })
     );
 }

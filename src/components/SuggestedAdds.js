@@ -15,7 +15,7 @@ const SuggestedAdds = (props) => {
     }, [])
     return (
         <div id="suggestedAdds">
-            {users.length !== 0 ?
+            {users && users.length !== 0 ?
                 <div id="suggestedAdds">
                     <h3>Who to follow</h3>
                     {users.map((user, index) => {

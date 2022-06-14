@@ -1,8 +1,17 @@
+import { useEffect, useState } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 
-function ProfileTop() {
+function ProfileTop(props) {
+    const { user, setFireApiCall, postType, setPostType } = props
+
+    const changePostType = (postTypeString) => {
+        setPostType(postTypeString);
+        setFireApiCall(prev => prev + 1);
+    }
+
     return (
         <div className="topContainer">
             <div className='profileTopTitle'>
@@ -32,10 +41,10 @@ function ProfileTop() {
                 <p className='px14'><span className='blackText bold'>38</span> Following &nbsp; &nbsp; &nbsp;<span className='blackText bold'>32</span> Followers</p>
             </div>
             <div className='profileTopFooter'>
-                <p className='bold'>Tweets</p>
-                <p className='bold'>Tweets  &amp; Replies</p>
-                <p className='bold'>Media</p>
-                <p className='bold profileTopFooterSelected'>Likes</p>
+                <p className={postType === 'tweets' ? 'bold profileTopFooterSelected' : 'bold'} onClick={() => changePostType('tweets')}>Tweets</p>
+                <p className={postType === 'replies' ? 'bold profileTopFooterSelected' : 'bold'} onClick={() => changePostType('replies')}>Tweets  &amp; Replies</p>
+                <p className={postType === 'media' ? 'bold profileTopFooterSelected' : 'bold'} onClick={() => changePostType('media')}>Media</p>
+                <p className={postType === 'likes' ? 'bold profileTopFooterSelected' : 'bold'} onClick={() => changePostType('likes')}>Likes</p>
             </div>
         </div>
     );

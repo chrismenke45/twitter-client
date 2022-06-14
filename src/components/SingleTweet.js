@@ -1,6 +1,7 @@
 import timeFinder from '../functions/timeFinder';
 
 import { useNavigate } from 'react-router-dom'
+import { decode } from 'html-entities'; 
 import getUser from '../functions/getUser';
 import checkForUser from '../functions/checkForUser';
 
@@ -129,11 +130,11 @@ function SingleTweet(props) {
     }
 
     return (
-        <article className="singleTweetContainer">
+        <article className="singleTweetContainer whiteHighlightColor">
             {retweetInfo && retweetInfo.author ?
                 <div className='retweetedBy greyColor'>
                     <FontAwesomeIcon icon={faRetweet} />
-                    <p>{retweetInfo.author._id == user.userObj._id ? 'You' : user.userObj.chosenName} retweeted</p>
+                    <p>{user && user.userObj && retweetInfo.author._id == user.userObj._id ? 'You' : user.userObj.chosenName} retweeted</p>
                 </div>
                 :
                 null
@@ -145,7 +146,7 @@ function SingleTweet(props) {
                 <div className="tweetContent">
                     <p className='tweetUser'>{tweet.author.chosenName} <span className="greyText">@{tweet.author.username} &#183; {timeFinder(tweet.created)}</span></p>
                     {tweet.text ?
-                        <p className='tweetText'>{tweet.text}</p>
+                        <p className='tweetText'>{decode(tweet.text)}</p>
                         :
                         null
                     }
@@ -167,7 +168,7 @@ function SingleTweet(props) {
 
                 </span>
                 <span className='footerIcon retweetIcon'>
-                    <FontAwesomeIcon icon={faRetweet} className={tweet.retweets && tweet.retweets.some(e => e.author === user.userObj._id) ? "icon retweeted" : "icon"} data-tweetid={tweet._id} onClick={retweetSubmit} />
+                    <FontAwesomeIcon icon={faRetweet} className={tweet.retweets && user && user.userObj && tweet.retweets.some(e => e.author === user.userObj._id) ? "icon retweeted" : "icon"} data-tweetid={tweet._id} onClick={retweetSubmit} />
                     {tweet.retweets.length ?
                         <p className="">{tweet.retweets.length}</p>
                         :
@@ -175,7 +176,7 @@ function SingleTweet(props) {
                     }
                 </span>
                 <span className="footerIcon heartIcon">
-                    <FontAwesomeIcon icon={faHeart} className={tweet.likes && tweet.likes.includes(user.userObj._id) ? "icon liked" : "icon"} data-tweetid={tweet._id} onClick={likeSubmit} />
+                    <FontAwesomeIcon icon={faHeart} className={tweet.likes && user && user.userObj && tweet.likes.includes(user.userObj._id) ? "icon liked" : "icon"} data-tweetid={tweet._id} onClick={likeSubmit} />
                     {tweet.likes.length ?
                         <p className="">{tweet.likes.length}</p>
                         :

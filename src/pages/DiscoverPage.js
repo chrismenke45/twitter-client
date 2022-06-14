@@ -12,9 +12,7 @@ import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
 
 const DiscoverPage = (props) => {
-    const { tweets, setTweets, loaded, setLoaded, user, setUser } = props
-
-    const [fireApiCall, setFireApiCall] = useState(0)
+    const { tweets, setTweets, loaded, setLoaded, user, setUser, fireApiCall, setFireApiCall } = props
 
     let navigate = useNavigate()
     

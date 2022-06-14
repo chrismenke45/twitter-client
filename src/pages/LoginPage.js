@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter } from '@fortawesome/free-brands-svg-icons'
+
 
 const LoginPage = (props) => {
     const twitterLogin = () => {
@@ -5,9 +8,10 @@ const LoginPage = (props) => {
         window.open((apiUrl + '/users/auth/twitter'), "_self")
     }
     return (
-        <div className="outerMost">
-            <h1>Please log in with your twitter account</h1>
-            <button onClick={twitterLogin}>Login</button>
+        <div id="loginPage">
+            <FontAwesomeIcon icon={faTwitter} className="icon" />
+            <h1>Join Fake Twitter Today.</h1>
+            <button className="typicalButton whiteHighlightColor" onClick={twitterLogin}>Sign in with with real Twitter</button>
         </div>
     )
 }

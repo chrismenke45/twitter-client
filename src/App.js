@@ -16,8 +16,9 @@ import checkForUser from "./functions/checkForUser";
 
 function App() {
   const [tweets, setTweets] = useState([]);
-  const [user, setUser] = useState({signedIn: false});
+  const [user, setUser] = useState({ signedIn: false });
   const [loaded, setLoaded] = useState(false);
+  const [fireApiCall, setFireApiCall] = useState(0)
 
 
 
@@ -33,11 +34,22 @@ function App() {
             setLoaded={setLoaded}
             user={user}
             setUser={setUser}
+            fireApiCall={fireApiCall}
+            setFireApiCall={setFireApiCall}
           />}>
         </Route>
         <Route
           path="/profile"
-          element={<ProfilePage />}>
+          element={<ProfilePage
+            tweets={tweets}
+            setTweets={setTweets}
+            loaded={loaded}
+            setLoaded={setLoaded}
+            user={user}
+            setUser={setUser}
+            fireApiCall={fireApiCall}
+            setFireApiCall={setFireApiCall}
+          />}>
         </Route>
         <Route
           path="/login"

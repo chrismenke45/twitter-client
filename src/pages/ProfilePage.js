@@ -1,44 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import SearchMargin from "../components/SearchMargin";
 import SingleTweet from "../components/SingleTweet";
 import NavMargin from "../components/NavMargin";
 import ProfileTop from "../components/ProfileTop";
 
+import getUser from "../functions/getUser";
+import checkForUser from "../functions/checkForUser";
+
+
 const ProfilePage = (props) => {
-    let tweetTests = [
-        {
-        text: 'This the text for the tweet test',
-        author: {
-            TwitterID: 69,
-            username: 'bobbymgee',
-            chosenName: 'Bobby McGee',
-            followers: [666, 420, 88],
-            img: 'https://imagescdn.wciu.com/kqf4I-1631201589-40-show-BOBS_BURGERS.jpg',
-          },
-        retweetOf: null,
-        commentOf: null,
-        comments: [666, 420, 88],
-        likes: [666, 420, 88],
-        retweets: [666, 420, 88],
-        img:
-        {
-            data: null,
-            contentType: "png"
-        },
-        created: new Date('May 30, 2022 10:24:00'),
-    }
-]
+    const { tweets, setTweets, loaded, setLoaded, user, setUser, fireApiCall, setFireApiCall } = props
+
+    let [postType, setPostType] = useState('tweets')
+
+    let navigate = useNavigate()
+
+    useEffect(() => {
+        if (!checkForUser(getUser())) {
+            navigate('/login')
+        } else {
+            setUser(getUser())
+            /*fetchTweets()
+                .then(tweetsArray => {
+                    setTweets(tweetsArray)
+                    setLoaded(true)
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                    navigate('/error')
+                })
+                */
+                setLoaded(true)
+        }
+
+
+    }, [fireApiCall])
     return (
         <div className="outerMost">
             <NavMargin />
-            <div className="centerPage">
-            <ProfileTop />
-            <SingleTweet tweet={tweetTests[0]}/>
-            </div>
-            <div className="expandable">
+            {loaded ?
+                <div className="centerPage">
+                    <ProfileTop user={user} setFireApiCall={setFireApiCall} postType={postType} setPostType={setPostType} />
+                    {/*<TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />*/}
+                </div>
+                :
+                <div className="spin centerPage">
 
-            </div>
-            <SearchMargin />
+                </div>
+            }
+            {loaded ?
+                <SearchMargin user={user} />
+                :
+                <div>
+
+                </div>
+            }
         </div>
     )
 }

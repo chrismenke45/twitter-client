@@ -5,10 +5,11 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 
 function ProfileTop(props) {
-    const { user, setFireApiCall, postType, setPostType } = props
+    const { user, setFireApiCall, postType, setPostType, profile, setInternalLoaded } = props
 
     const changePostType = (postTypeString) => {
         setPostType(postTypeString);
+        setInternalLoaded(false);
         setFireApiCall(prev => prev + 1);
     }
 
@@ -19,26 +20,31 @@ function ProfileTop(props) {
                     <FontAwesomeIcon icon={faArrowLeft} id="backIcon" />
                 </Link>
                 <div>
-                    <h1 className='profileTopName'>Bobby McGee</h1>
+                    <h1 className='profileTopName'>{profile.chosenName}</h1>
                     <p>22 Tweets</p>
                 </div>
             </div>
             <div className='profileTopHeader'>
-                <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/sunset-quotes-21-1586531574.jpg" className="banner"></img>
+                <img src={profile.background_image || "https://www.solidbackgrounds.com/images/1920x1080/1920x1080-dark-gray-solid-color-background.jpg"} className="banner"></img>
                 <div className="userPicContainer">
-                    <img src="https://imagescdn.wciu.com/kqf4I-1631201589-40-show-BOBS_BURGERS.jpg" alt="no img" className="userPic"></img>
+                    <img src={profile.profile_image} alt="no img" className="userPic"></img>
                 </div>
                 <div className='bottom'>
                     <div className="whiteBox">
 
                     </div>
-                    <button className='typicalButton'>Follow</button>
+                    {user.userObj._id != profile._id ?
+                        <button className='typicalButton'>Follow</button>
+                        :
+                        null
+                    }
+
                 </div>
             </div>
             <div className='profileTopText'>
-                <h1 className='profileTopName'>Bobby McGee</h1>
-                <p>@bobbymgee</p>
-                <p className='px14'><span className='blackText bold'>38</span> Following &nbsp; &nbsp; &nbsp;<span className='blackText bold'>32</span> Followers</p>
+                <h1 className='profileTopName'>{profile.chosenName}</h1>
+                <p>@{profile.username}</p>
+                <p className='px14'><span className='blackText bold'>{profile.following.length}</span> Following &nbsp; &nbsp; &nbsp;<span className='blackText bold'>{profile.followers.length}</span> Followers</p>
             </div>
             <div className='profileTopFooter'>
                 <p className={postType === 'tweets' ? 'bold profileTopFooterSelected' : 'bold'} onClick={() => changePostType('tweets')}>Tweets</p>

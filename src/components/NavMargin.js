@@ -5,6 +5,7 @@ import { faHouse, faUser, faHashtag } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
 const NavMargin = (props) => {
+    const { user, setLoaded } = props
     return (
         <nav>
             <Link to='/login' className='routerLink'>
@@ -16,7 +17,7 @@ const NavMargin = (props) => {
                     <p>Home</p>
                 </button>
             </Link>
-            <Link to='/profile' className='routerLink'>
+            <Link to={`/profile/${user.userObj._id}`} onClick={() => setLoaded(false)} className='routerLink'>
                 <button className='navButton'>
                     <FontAwesomeIcon icon={faUser} className="" />
                     <p>Profile</p>

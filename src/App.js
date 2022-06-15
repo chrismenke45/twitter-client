@@ -39,7 +39,7 @@ function App() {
           />}>
         </Route>
         <Route
-          path="/profile"
+          path="/profile/:profileid"
           element={<ProfilePage
             tweets={tweets}
             setTweets={setTweets}

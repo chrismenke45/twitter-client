@@ -15,7 +15,7 @@ const DiscoverPage = (props) => {
     const { tweets, setTweets, loaded, setLoaded, user, setUser, fireApiCall, setFireApiCall } = props
 
     let navigate = useNavigate()
-    
+
     useEffect(() => {
         if (!checkForUser(getUser())) {
             navigate('/login')
@@ -33,15 +33,19 @@ const DiscoverPage = (props) => {
         }
 
 
-    }, [fireApiCall]) 
+    }, [fireApiCall])
 
     return (
         <div className="outerMost">
-            <NavMargin />
+            {loaded ?
+                <NavMargin user={user} setLoaded={setLoaded}/>
+                :
+                null
+            }
             {loaded ?
                 <div className="centerPage">
                     <HomeTop user={user} setFireApiCall={setFireApiCall} />
-                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />
+                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} />
                 </div>
                 :
                 <div className="spin centerPage">
@@ -49,14 +53,12 @@ const DiscoverPage = (props) => {
                 </div>
             }
             {loaded ?
-            <SearchMargin user={user}/>
-            :
-            <div>
+                <SearchMargin user={user} />
+                :
+                null
+            }
 
-            </div>
-        }
 
-            
         </div>
     )
 }

@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import SearchMargin from "../components/SearchMargin";
-import SingleTweet from "../components/SingleTweet";
 import NavMargin from "../components/NavMargin";
 import ProfileTop from "../components/ProfileTop";
+import TweetDisplay from "../components/TweetDisplay";
 
 import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
+import fetchProfileUser from "../functions/fetchProfileUser";
+import fetchProfileTweets from "../functions/fetchProfileTweets";
 
 
 const ProfilePage = (props) => {
     const { tweets, setTweets, loaded, setLoaded, user, setUser, fireApiCall, setFireApiCall } = props
 
-    let [postType, setPostType] = useState('tweets')
+    const { profileid } = useParams()
+
+    const [postType, setPostType] = useState('replies')
+    const [profile, setProfile] = useState(null)
+    const [internalLoaded, setInternalLoaded] = useState(false)
 
     let navigate = useNavigate()
 
@@ -22,28 +28,41 @@ const ProfilePage = (props) => {
             navigate('/login')
         } else {
             setUser(getUser())
-            /*fetchTweets()
-                .then(tweetsArray => {
-                    setTweets(tweetsArray)
+            Promise.all([fetchProfileUser(getUser(), profileid), fetchProfileTweets(getUser(), profileid, postType)])
+                .then(responses => {
+                    setProfile(responses[0]);
+                    setTweets(responses[1]);
+                    setInternalLoaded(true)
                     setLoaded(true)
                 })
                 .catch(err => {
                     console.error('Error:', err);
                     navigate('/error')
                 })
-                */
-                setLoaded(true)
         }
 
 
     }, [fireApiCall])
     return (
         <div className="outerMost">
-            <NavMargin />
+            {loaded ?
+                <NavMargin user={user} setLoaded={setLoaded} />
+                :
+                null
+            }
             {loaded ?
                 <div className="centerPage">
-                    <ProfileTop user={user} setFireApiCall={setFireApiCall} postType={postType} setPostType={setPostType} />
-                    {/*<TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />*/}
+                    <ProfileTop user={user} setFireApiCall={setFireApiCall} postType={postType} setPostType={setPostType} profile={profile} setInternalLoaded={setInternalLoaded} />
+                    {internalLoaded ?
+                        <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />
+                        :
+                        <div className="spinLocalParent">
+                            <div className="spinLocal">
+
+                            </div>
+                        </div>
+                    }
+
                 </div>
                 :
                 <div className="spin centerPage">
@@ -53,9 +72,7 @@ const ProfilePage = (props) => {
             {loaded ?
                 <SearchMargin user={user} />
                 :
-                <div>
-
-                </div>
+                null
             }
         </div>
     )

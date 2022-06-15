@@ -1,7 +1,7 @@
 import timeFinder from '../functions/timeFinder';
 
-import { useNavigate } from 'react-router-dom'
-import { decode } from 'html-entities'; 
+import { useNavigate, Link } from 'react-router-dom'
+import { decode } from 'html-entities';
 import getUser from '../functions/getUser';
 import checkForUser from '../functions/checkForUser';
 
@@ -10,7 +10,7 @@ import { faRetweet } from '@fortawesome/free-solid-svg-icons'
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 
 function SingleTweet(props) {
-    const { tweet, user, setFireApiCall, retweetInfo } = props;
+    const { tweet, user, setFireApiCall, retweetInfo, setLoaded } = props;
 
     let navigate = useNavigate();
 
@@ -144,7 +144,8 @@ function SingleTweet(props) {
                     <img src={tweet.author.profile_image} alt="no img" className="userPic"></img>
                 </div>
                 <div className="tweetContent">
-                    <p className='tweetUser'>{tweet.author.chosenName} <span className="greyText">@{tweet.author.username} &#183; {timeFinder(tweet.created)}</span></p>
+                    <Link to={`/profile/${tweet.author._id}`} onClick={() => setLoaded(false)} className=' routerLink tweetUser'>{tweet.author.chosenName} <span className="greyText">@{tweet.author.username} &#183; {timeFinder(tweet.created)}</span></Link>
+
                     {tweet.text ?
                         <p className='tweetText'>{decode(tweet.text)}</p>
                         :

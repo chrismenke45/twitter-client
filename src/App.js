@@ -10,6 +10,7 @@ import DiscoverPage from "./pages/DiscoverPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import SetCredentials from "./components/SetCredentials";
+import TweetPage from "./pages/TweetPage";
 
 import getUser from "./functions/getUser";
 import checkForUser from "./functions/checkForUser";
@@ -41,6 +42,19 @@ function App() {
         <Route
           path="/profile/:profileid"
           element={<ProfilePage
+            tweets={tweets}
+            setTweets={setTweets}
+            loaded={loaded}
+            setLoaded={setLoaded}
+            user={user}
+            setUser={setUser}
+            fireApiCall={fireApiCall}
+            setFireApiCall={setFireApiCall}
+          />}>
+        </Route>
+        <Route
+          path="/tweet/:tweetid"
+          element={<TweetPage
             tweets={tweets}
             setTweets={setTweets}
             loaded={loaded}

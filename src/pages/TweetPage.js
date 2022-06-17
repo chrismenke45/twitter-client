@@ -8,7 +8,7 @@ import MainTweet from "../components/MainTweet";
 
 import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
-import fetchMainTweet from "../functions/fetchMainTweet";
+import fetchMainTweet from "../functions/fetch/fetchMainTweet";
 
 
 const TweetPage = (props) => {
@@ -26,8 +26,9 @@ const TweetPage = (props) => {
         } else {
             setUser(getUser())
             fetchMainTweet(getUser(), tweetid)
-                .then(response => {
-                    setTheTweet(response);
+                .then(responses => {
+                    setTheTweet(responses[0]);
+                    setTweets(responses[1]);
                     setLoaded(true)
                 })
                 .catch(err => {
@@ -47,7 +48,19 @@ const TweetPage = (props) => {
             }
             {loaded ?
                 <div className="centerPage">
-                    <MainTweet user={user} setFireApiCall={setFireApiCall}  theTweet={theTweet} setLoaded={setLoaded} />
+                    {theTweet && Object.keys(theTweet).length !== 0 ?
+                        theTweet.retweetOf ?
+                            <MainTweet user={user} setFireApiCall={setFireApiCall} theTweet={theTweet.retweetOf} setLoaded={setLoaded} retweetInfo={theTweet} />
+                            :
+                            <MainTweet user={user} setFireApiCall={setFireApiCall} theTweet={theTweet} setLoaded={setLoaded} />
+                        :
+                        <div className="centerPage">
+                            <h2>
+                                Oops! We can't find that Tweet
+                            </h2>
+                        </div>
+                    }
+
                     {/*<TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />*/}
                 </div>
                 :

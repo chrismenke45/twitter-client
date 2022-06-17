@@ -7,7 +7,7 @@ import TweetDisplay from "../components/TweetDisplay";
 import HomeTop from "../components/HomeTop";
 import NavMargin from "../components/NavMargin";
 
-import fetchTweets from "../functions/fetchTweets";
+import fetchTweets from "../functions/fetch/fetchTweets";
 import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
 

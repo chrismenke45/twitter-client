@@ -1,22 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faRetweet } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faRetweet, faImage } from '@fortawesome/free-solid-svg-icons'
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { decode } from 'html-entities';
 
 
 import timeFinder from '../functions/timeFinder';
+import checkForUser from '../functions/checkForUser';
 
 function MainTweet(props) {
-    const { user, setFireApiCall, theTweet, setLoaded } = props
+    const { user, setFireApiCall, theTweet, setLoaded, retweetInfo } = props
 
-    /*const like = (e) => {
+    let navigate = useNavigate()
+
+    /*For tweet reply */
+
+    const [tweetInfo, setTweetInfo] = useState(
+        {
+            tweetText: '',
+            img: null,
+        }
+    )
+    const imageRef = useRef(null)
+    const imageButtonRef = useRef(null)
+
+    const handleTextChange = (e) => {
+        setTweetInfo({ ...tweetInfo, tweetText: e.target.value })
+    }
+
+    const handleImageChange = (e) => {
+        imageRef.current.src = URL.createObjectURL(e.target.files[0])
+        setTweetInfo({ ...tweetInfo, img: e.target.files[0] })
+    }
+
+    const imageButtonClick = () => {
+        imageButtonRef.current.click()
+    }
+
+
+    /*for tweet likes/retweets*/
+    const like = () => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + tweet._id + '/like';
+        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + theTweet._id + '/like';
         const options = {
             method: 'PUT',
             headers: {
@@ -28,20 +57,18 @@ function MainTweet(props) {
         fetch(url, options)
             .then(() => {
                 setFireApiCall(prev => prev + 1)
-                navigate('/', { replace: true })
             })
             .catch(error => {
                 console.error('Error:', error)
-                navigate('/error')
+                return navigate('/error')
             })
-        navigate('/', { replace: true })
     }
 
-    const unlike = (e) => {
+    const unlike = () => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + tweet._id + '/unlike';
+        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + theTweet._id + '/unlike';
         const options = {
             method: 'PUT',
             headers: {
@@ -53,28 +80,25 @@ function MainTweet(props) {
         fetch(url, options)
             .then(() => {
                 setFireApiCall(prev => prev + 1)
-                navigate('/', { replace: true })
             })
             .catch(error => {
                 console.error('Error:', error)
-                navigate('/error')
             })
-        navigate('/', { replace: true })
     }
 
-    const likeSubmit = (e) => {
-        if (tweet.likes.includes(user.userObj._id)) {
-            unlike(e);
+    const likeSubmit = () => {
+        if (theTweet.likes.includes(user.userObj._id)) {
+            unlike();
         } else {
-            like(e);
+            like();
         }
     }
 
-    const retweet = (e) => {
+    const retweet = () => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + tweet._id + '/retweet';
+        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + theTweet._id + '/retweet';
         const options = {
             method: 'POST',
             headers: {
@@ -86,20 +110,18 @@ function MainTweet(props) {
         fetch(url, options)
             .then(() => {
                 setFireApiCall(prev => prev + 1)
-                navigate('/', { replace: true })
             })
             .catch(error => {
                 console.error('Error:', error)
-                navigate('/error')
+                return navigate('/error')
             })
-        navigate('/', { replace: true })
     }
 
-    const deleteRetweet = (e) => {
+    const deleteRetweet = () => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + (retweetInfo ? retweetInfo._id : tweet._id) + '/delete';
+        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + (retweetInfo ? retweetInfo._id : theTweet._id) + '/delete';
         const options = {
             method: 'DELETE',
             headers: {
@@ -111,28 +133,23 @@ function MainTweet(props) {
         fetch(url, options)
             .then(() => {
                 setFireApiCall(prev => prev + 1)
-                navigate('/', { replace: true })
             })
             .catch(error => {
                 console.error('Error:', error)
-                navigate('/error')
+                return navigate('/error')
             })
-        navigate('/', { replace: true })
     }
-    const retweetSubmit = (e) => {
-        if (tweet.retweets && tweet.retweets.some(e => e.author === user.userObj._id)) {
-            deleteRetweet(e);
+    const retweetSubmit = () => {
+        if (theTweet.retweets && theTweet.retweets.some(e => e.author === user.userObj._id)) {
+            deleteRetweet();
         } else {
-            retweet(e);
+            retweet();
         }
     }
-    */
-   const retweetSubmit = null
-    const likeSubmit = null
 
-    let theTweetTime = new Date(theTweet.created).toLocaleString('default', { hour: 'numeric', minute: 'numeric'});
+
+    let theTweetTime = new Date(theTweet.created).toLocaleString('default', { hour: 'numeric', minute: 'numeric' });
     let theTweetDate = new Date(theTweet.created).toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' });
-    console.log(theTweetTime)
     return (
         <div className="topContainer">
             <div className='mainTweetTitle'>
@@ -143,6 +160,14 @@ function MainTweet(props) {
                     <h1 className='mainTweetName'>Tweet</h1>
                 </div>
             </div>
+            {retweetInfo && retweetInfo.author ?
+                <div className='retweetedBy greyColor'>
+                    <FontAwesomeIcon icon={faRetweet} />
+                    <p>{user && user.userObj && retweetInfo.author._id == user.userObj._id ? 'You' : user.userObj.chosenName} retweeted</p>
+                </div>
+                :
+                null
+            }
             <div className="mainTweetHeader">
                 <div className="userPicContainer">
                     <img src={theTweet.author.profile_image} alt="no img" className="userPic"></img>
@@ -165,32 +190,46 @@ function MainTweet(props) {
                 }
                 <p className='greyText px15 greyBottomBorder'>{theTweetTime} &#183; {theTweetDate}</p>
             </div>
-            <div className="singleTweetFooter">
+            <div className='mainTweetStats greyBottomBorder'>
+                <p className='px14'>
+                    <span className='lessBold'>{theTweet.retweets ? theTweet.retweets.length : 0} </span>
+                    <span className='greyText'>Retweet{theTweet.retweets ? theTweet.retweets.length == 1 ? null : 's' : null}</span>
+                </p>
+                <p className='px14'>
+                    <span className='lessBold'>{theTweet.comments ? theTweet.comments.length : 0} </span>
+                    <span className='greyText'>Quote Tweet{theTweet.comments ? theTweet.comments.length == 1 ? null : 's' : null}</span>
+                </p>
+                <p className='px14'>
+                    <span className='lessBold'>{theTweet.likes ? theTweet.likes.length : 0} </span>
+                    <span className='greyText'>Like{theTweet.likes ? theTweet.likes.length == 1 ? null : 's' : null}</span>
+                </p>
+            </div>
+            <div className="singleTweetFooter greyBottomBorder">
                 <span className='footerIcon commentIcon'>
-                    <FontAwesomeIcon icon={faComment} className="icon" />
-                    {theTweet.comments.length ?
-                        <p>{theTweet.comments.length}</p>
-                        :
-                        null
-                    }
-
+                    <FontAwesomeIcon icon={faComment} className="icon px18" />
                 </span>
                 <span className='footerIcon retweetIcon'>
-                    <FontAwesomeIcon icon={faRetweet} className={theTweet.retweets && user && user.userObj && theTweet.retweets.some(e => e.author === user.userObj._id) ? "icon retweeted" : "icon"} data-tweetid={theTweet._id} onClick={retweetSubmit} />
-                    {theTweet.retweets.length ?
-                        <p className="">{theTweet.retweets.length}</p>
-                        :
-                        null
-                    }
+                    <FontAwesomeIcon icon={faRetweet} className={theTweet.retweets && user && user.userObj && theTweet.retweets.some(e => e.author === user.userObj._id) ? "icon px18 retweeted" : "px18 icon"} onClick={retweetSubmit} />
                 </span>
                 <span className="footerIcon heartIcon">
-                    <FontAwesomeIcon icon={faHeart} className={theTweet.likes && user && user.userObj && theTweet.likes.includes(user.userObj._id) ? "icon liked" : "icon"} data-tweetid={theTweet._id} onClick={likeSubmit} />
-                    {theTweet.likes.length ?
-                        <p className="">{theTweet.likes.length}</p>
-                        :
-                        null
-                    }
+                    <FontAwesomeIcon icon={faHeart} className={theTweet.likes && user && user.userObj && theTweet.likes.includes(user.userObj._id) ? "icon px18 liked" : "icon px18"} onClick={likeSubmit} />
                 </span>
+            </div>
+            <div className='mainTweetReply'>
+                <p className='mainTweetReplyHeader greyText'>Replying to <span className='blueText'>@{theTweet.author.username}</span></p>
+                <div className='mainTweetReplyContent'>
+                    <div className="userPicContainer">
+                        <img src={user.userObj.profile_image} alt="no img" className="userPic"></img>
+                    </div>
+                    <textarea name="tweetText" placeholder="Tweet your reply" maxLength="140" value={tweetInfo.tweetText} onChange={e => handleTextChange(e)}></textarea>
+                </div>
+                <div className="mainTweetReplyFooter">
+                    <span className=''>
+                        <FontAwesomeIcon icon={faImage} onClick={imageButtonClick} className="blueText" />
+                        <input name="img" type="file" onChange={handleImageChange} accept="image/png, image/jpeg" ref={imageButtonRef} hidden={true}></input>
+                    </span>
+                    <button type='submit' className='typicalButton'>Reply</button>
+                </div>
             </div>
         </div>
     );

@@ -14,7 +14,7 @@ function SingleTweet(props) {
 
     let navigate = useNavigate();
 
-    const like = (e) => {
+    const like = () => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
@@ -30,16 +30,14 @@ function SingleTweet(props) {
         fetch(url, options)
             .then(() => {
                 setFireApiCall(prev => prev + 1)
-                navigate('/', { replace: true })
             })
             .catch(error => {
                 console.error('Error:', error)
-                navigate('/error')
+                return navigate('/error')
             })
-        navigate('/', { replace: true })
     }
 
-    const unlike = (e) => {
+    const unlike = () => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
@@ -55,13 +53,11 @@ function SingleTweet(props) {
         fetch(url, options)
             .then(() => {
                 setFireApiCall(prev => prev + 1)
-                navigate('/', { replace: true })
             })
             .catch(error => {
                 console.error('Error:', error)
-                navigate('/error')
+                return navigate('/error')
             })
-        navigate('/', { replace: true })
     }
 
     const likeSubmit = (e) => {
@@ -72,7 +68,7 @@ function SingleTweet(props) {
         }
     }
 
-    const retweet = (e) => {
+    const retweet = () => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
@@ -88,16 +84,14 @@ function SingleTweet(props) {
         fetch(url, options)
             .then(() => {
                 setFireApiCall(prev => prev + 1)
-                navigate('/', { replace: true })
             })
             .catch(error => {
                 console.error('Error:', error)
-                navigate('/error')
+                return navigate('/error')
             })
-        navigate('/', { replace: true })
     }
 
-    const deleteRetweet = (e) => {
+    const deleteRetweet = () => {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
@@ -112,14 +106,12 @@ function SingleTweet(props) {
         delete options.headers['Content-Type'];
         fetch(url, options)
             .then(() => {
-                setFireApiCall(prev => prev + 1)
-                navigate('/', { replace: true })
+                setFireApiCall(prev => prev + 1)  
             })
             .catch(error => {
                 console.error('Error:', error)
-                navigate('/error')
+                return navigate('/error')
             })
-        navigate('/', { replace: true })
     }
     const retweetSubmit = (e) => {
         if (tweet.retweets && tweet.retweets.some(e => e.author === user.userObj._id)) {
@@ -130,7 +122,7 @@ function SingleTweet(props) {
     }
 
     return (
-        <article className="singleTweetContainer whiteHighlightColor">
+        <article className="singleTweetContainer whiteHighlightColor" onClick={(e) => navigate(`/tweet/${tweet._id}`)}>
             {retweetInfo && retweetInfo.author ?
                 <div className='retweetedBy greyColor'>
                     <FontAwesomeIcon icon={faRetweet} />

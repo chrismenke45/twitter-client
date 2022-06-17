@@ -20,6 +20,9 @@
 .blackText {
   color: var(--black-color);
 }
+.px18 {
+  font-size: 18px;
+}
 .px15 {
   font-size: 15px;
 }
@@ -160,7 +163,8 @@ textarea:focus, input:focus{
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  width: 100%;
+  width: calc(100% - 20px);
+  margin: 0 10px;
 }
 .footerIcon {
   width: fit-content;
@@ -374,6 +378,61 @@ textarea:focus, input:focus{
 .mainTweetContent > * {
   width: 100%;
   padding: 0 0 10px 0;
+}
+
+.mainTweetStats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0 10px 10px;
+  padding: 0 0 10px 0;
+  width: calc(100% - 20px);
+}
+
+.mainTweetStats > p {
+  margin: 0 10px 0 0;
+}
+
+.mainTweetReply {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 10px 0 0 0;
+}
+
+.mainTweetReplyHeader {
+  margin: 0 0 0 calc(var(--user-pic-diameter) + 20px);
+}
+
+.mainTweetReplyContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: -10px 0 0 0;
+  width: 100%;
+}
+
+.mainTweetReplyContent > textarea {
+  margin: 20px 20px 0 0;
+  width: auto;
+  border: none;
+  font-family: inherit;
+  font-size: 20px;
+  color: inherit;
+  flex: 1;
+  resize: vertical;
+}
+
+.mainTweetReplyFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 10px 0 calc(var(--user-pic-diameter) + 20px);
+  width: calc(100% - 30px - var(--user-pic-diameter));
 }
  
 /* Navbar */

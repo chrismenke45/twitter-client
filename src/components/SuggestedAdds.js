@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SuggestedAdd from "./SuggestedAdd";
-import fetchSuggestedUsers from '../functions/fetchSuggestedUsers'
+import fetchSuggestedUsers from '../functions/fetch/fetchSuggestedUsers'
 
 const SuggestedAdds = (props) => {
     const { user } = props;

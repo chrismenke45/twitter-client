@@ -8,8 +8,8 @@ import TweetDisplay from "../components/TweetDisplay";
 
 import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
-import fetchProfileUser from "../functions/fetchProfileUser";
-import fetchProfileTweets from "../functions/fetchProfileTweets";
+import fetchProfileUser from "../functions/fetch/fetchProfileUser";
+import fetchProfileTweets from "../functions/fetch/fetchProfileTweets";
 
 
 const ProfilePage = (props) => {
@@ -50,23 +50,30 @@ const ProfilePage = (props) => {
                 :
                 null
             }
-            {loaded ?
-                <div className="centerPage">
-                    <ProfileTop user={user} setFireApiCall={setFireApiCall} postType={postType} setPostType={setPostType} profile={profile} setInternalLoaded={setInternalLoaded} />
-                    {internalLoaded ?
-                        <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />
-                        :
-                        <div className="spinLocalParent">
-                            <div className="spinLocal">
+            {profile && Object.keys(profile).length !== 0 ?
+                loaded ?
+                    <div className="centerPage">
+                        <ProfileTop user={user} setFireApiCall={setFireApiCall} postType={postType} setPostType={setPostType} profile={profile} setInternalLoaded={setInternalLoaded} />
+                        {internalLoaded ?
+                            <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />
+                            :
+                            <div className="spinLocalParent">
+                                <div className="spinLocal">
 
+                                </div>
                             </div>
-                        </div>
-                    }
+                        }
 
-                </div>
+                    </div>
+                    :
+                    <div className="spin centerPage">
+
+                    </div>
                 :
-                <div className="spin centerPage">
-
+                <div className="centerPage">
+                    <h2>
+                        Oops! We can't find this user
+                    </h2>
                 </div>
             }
             {loaded ?

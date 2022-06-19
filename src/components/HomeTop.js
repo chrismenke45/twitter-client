@@ -67,12 +67,10 @@ function HomeTop(props) {
                         tweetText: '',
                         img: null,
                     })
-                    navigate('/', { replace: true })
                 })
                 .catch(error => {
                     console.error('Error:', error)
                 })
-            navigate('/', { replace: true })
         }
     }
     return (

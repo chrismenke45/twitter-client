@@ -39,6 +39,47 @@ function MainTweet(props) {
         imageButtonRef.current.click()
     }
 
+    let replySubmit = (e) => {
+        e.preventDefault();
+        if (!checkForUser(user)) {
+            return navigate('/login')
+        }
+        if (tweetInfo.tweetText == '' && tweetInfo.img == null) {
+            return
+        }
+        else {
+            let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + theTweet._id + '/comment';
+            let formData = new FormData()
+            formData.append('text', tweetInfo.tweetText)
+            if (tweetInfo.tweetText !== '') {
+                formData.append('text', tweetInfo.tweetText)
+            }
+            if (tweetInfo.img !== null) {
+                formData.append('img', tweetInfo.img)
+            }
+            const options = {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `bearer ${(user ? user.jwt : null)}`
+                }
+            };
+            delete options.headers['Content-Type'];
+            fetch(url, options)
+                .then(() => {
+                    setFireApiCall(prev => prev + 1)
+                    setTweetInfo({
+                        tweetText: '',
+                        img: null,
+                    })
+                })
+                .catch(error => {
+                    console.error('Error:', error)
+                })
+        }
+    }
+
 
     /*for tweet likes/retweets*/
     const like = () => {
@@ -215,7 +256,7 @@ function MainTweet(props) {
                     <FontAwesomeIcon icon={faHeart} className={theTweet.likes && user && user.userObj && theTweet.likes.includes(user.userObj._id) ? "icon px18 liked" : "icon px18"} onClick={likeSubmit} />
                 </span>
             </div>
-            <div className='mainTweetReply'>
+            <form className='mainTweetReply' onSubmit={replySubmit}>
                 <p className='mainTweetReplyHeader greyText'>Replying to <span className='blueText'>@{theTweet.author.username}</span></p>
                 <div className='mainTweetReplyContent'>
                     <div className="userPicContainer">
@@ -230,7 +271,7 @@ function MainTweet(props) {
                     </span>
                     <button type='submit' className='typicalButton'>Reply</button>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }

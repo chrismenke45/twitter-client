@@ -5,6 +5,7 @@ import SearchMargin from "../components/SearchMargin";
 import NavMargin from "../components/NavMargin";
 import ProfileTop from "../components/ProfileTop";
 import TweetDisplay from "../components/TweetDisplay";
+import CommentPopUp from "../components/CommentPopUp";
 
 import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
@@ -20,6 +21,7 @@ const ProfilePage = (props) => {
     const [postType, setPostType] = useState('replies')
     const [profile, setProfile] = useState(null)
     const [internalLoaded, setInternalLoaded] = useState(false)
+    const [commentTweet, setCommentTweet] = useState(null)
 
     let navigate = useNavigate()
 
@@ -45,17 +47,18 @@ const ProfilePage = (props) => {
     }, [fireApiCall])
     return (
         <div className="outerMost">
+            {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded = {setLoaded} /> : null}
             {loaded ?
                 <NavMargin user={user} setLoaded={setLoaded} />
                 :
                 null
             }
-            {profile && Object.keys(profile).length !== 0 ?
-                loaded ?
+            {loaded ?
+                Object.keys(profile).length !== 0 ?
                     <div className="centerPage">
                         <ProfileTop user={user} setFireApiCall={setFireApiCall} postType={postType} setPostType={setPostType} profile={profile} setInternalLoaded={setInternalLoaded} />
                         {internalLoaded ?
-                            <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />
+                            <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet}/>
                             :
                             <div className="spinLocalParent">
                                 <div className="spinLocal">
@@ -65,15 +68,16 @@ const ProfilePage = (props) => {
                         }
 
                     </div>
-                    :
-                    <div className="spin centerPage">
 
+                    :
+                    <div className="centerPage">
+                        <h3 className="centerIt">
+                            Oops! We can't find this user
+                        </h3>
                     </div>
                 :
-                <div className="centerPage">
-                    <h2>
-                        Oops! We can't find this user
-                    </h2>
+                <div className="spin centerPage">
+
                 </div>
             }
             {loaded ?

@@ -6,6 +6,7 @@ import SearchMargin from "../components/SearchMargin";
 import TweetDisplay from "../components/TweetDisplay";
 import HomeTop from "../components/HomeTop";
 import NavMargin from "../components/NavMargin";
+import CommentPopUp from "../components/CommentPopUp";
 
 import fetchTweets from "../functions/fetch/fetchTweets";
 import getUser from "../functions/getUser";
@@ -16,6 +17,9 @@ const DiscoverPage = (props) => {
 
     let navigate = useNavigate()
 
+    const [commentTweet, setCommentTweet] = useState(null)
+    const [commentOpen, setCommentOpen] = useState(true)
+
     useEffect(() => {
         if (!checkForUser(getUser())) {
             navigate('/login')
@@ -24,6 +28,13 @@ const DiscoverPage = (props) => {
             fetchTweets()
                 .then(tweetsArray => {
                     setTweets(tweetsArray)
+                    /*if (tweetsArray[0].commentOf) {
+                        setCommentTweet(tweetsArray[0].commentOf)
+                    } else if (tweetsArray[0].retweetOf) {
+                        setCommentTweet(tweetsArray[0].retweetOf)
+                    } else {
+                        setCommentTweet(tweetsArray[0])
+                    }*/
                     setLoaded(true)
                 })
                 .catch(err => {
@@ -37,15 +48,23 @@ const DiscoverPage = (props) => {
 
     return (
         <div className="outerMost">
+            {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} /> : null}
             {loaded ?
-                <NavMargin user={user} setLoaded={setLoaded}/>
+                <NavMargin user={user} setLoaded={setLoaded} />
                 :
                 null
             }
             {loaded ?
                 <div className="centerPage">
                     <HomeTop user={user} setFireApiCall={setFireApiCall} />
-                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} />
+                    {tweets.length != 0 ?
+                        <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} />
+                        :
+                        <div className="centerIt">
+                            <h3>Follow some people to see their tweets!</h3>
+                        </div>
+                    }
+
                 </div>
                 :
                 <div className="spin centerPage">

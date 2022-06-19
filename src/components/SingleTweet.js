@@ -10,7 +10,7 @@ import { faRetweet } from '@fortawesome/free-solid-svg-icons'
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 
 function SingleTweet(props) {
-    const { tweet, user, setFireApiCall, retweetInfo, setLoaded } = props;
+    const { tweet, user, setFireApiCall, retweetInfo, setLoaded, setCommentTweet } = props;
 
     let navigate = useNavigate();
 
@@ -106,7 +106,7 @@ function SingleTweet(props) {
         delete options.headers['Content-Type'];
         fetch(url, options)
             .then(() => {
-                setFireApiCall(prev => prev + 1)  
+                setFireApiCall(prev => prev + 1)
             })
             .catch(error => {
                 console.error('Error:', error)
@@ -121,12 +121,29 @@ function SingleTweet(props) {
         }
     }
 
+    const commentOpen = () => {
+        if (tweet.commentOf) {
+            setCommentTweet(tweet.commentOf)
+        } else if (tweet.retweetOf) {
+            setCommentTweet(tweet.retweetOf)
+        } else {
+            setCommentTweet(tweet)
+        }
+    }
+    const navigateToTweet = (e) => {
+        if (e.target !== e.currentTarget) {
+            return
+        } else {
+            navigate(`/tweet/${tweet._id}`)
+        }
+    }
+
     return (
-        <article className="singleTweetContainer whiteHighlightColor" onClick={(e) => navigate(`/tweet/${tweet._id}`)}>
+        <article className="singleTweetContainer whiteHighlightColor" onClick={(e) => navigateToTweet(e)}>
             {retweetInfo && retweetInfo.author ?
                 <div className='retweetedBy greyColor'>
                     <FontAwesomeIcon icon={faRetweet} />
-                    <p>{user && user.userObj && retweetInfo.author._id == user.userObj._id ? 'You' : user.userObj.chosenName} retweeted</p>
+                    <Link to={`/profile/${tweet.author._id}`} onClick={() => setLoaded(false)} className="routerLink" data-nav="true">{user && user.userObj && retweetInfo.author._id == user.userObj._id ? 'You' : user.userObj.chosenName} retweeted</Link>
                 </div>
                 :
                 null
@@ -137,7 +154,10 @@ function SingleTweet(props) {
                 </div>
                 <div className="tweetContent">
                     <Link to={`/profile/${tweet.author._id}`} onClick={() => setLoaded(false)} className=' routerLink tweetUser'><span className='lessBold'>{tweet.author.chosenName} </span><span className="greyText">@{tweet.author.username} &#183; {timeFinder(tweet.created)}</span></Link>
-
+                    {tweet.commentOf && tweet.commentOf.author && tweet.commentOf.author.username ?
+                        <p className='replyInfo'><span className='greyText'>Replying to </span><span className='blueText'>@{tweet.commentOf.author.username}</span></p>
+                        :
+                        null}
                     {tweet.text ?
                         <p className='tweetText'>{decode(tweet.text)}</p>
                         :
@@ -152,7 +172,7 @@ function SingleTweet(props) {
             </div>
             <div className="singleTweetFooter">
                 <span className='footerIcon commentIcon'>
-                    <FontAwesomeIcon icon={faComment} className="icon" />
+                    <FontAwesomeIcon icon={faComment} className="icon" onClick={commentOpen}/>
                     {tweet.comments.length ?
                         <p>{tweet.comments.length}</p>
                         :

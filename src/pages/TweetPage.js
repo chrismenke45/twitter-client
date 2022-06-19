@@ -5,6 +5,7 @@ import SearchMargin from "../components/SearchMargin";
 import NavMargin from "../components/NavMargin";
 import TweetDisplay from "../components/TweetDisplay";
 import MainTweet from "../components/MainTweet";
+import CommentPopUp from "../components/CommentPopUp";
 
 import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
@@ -17,6 +18,7 @@ const TweetPage = (props) => {
     const { tweetid } = useParams()
 
     const [theTweet, setTheTweet] = useState(null)
+    const [commentTweet, setCommentTweet] = useState(null)
 
     let navigate = useNavigate()
 
@@ -41,6 +43,7 @@ const TweetPage = (props) => {
     }, [fireApiCall])
     return (
         <div className="outerMost">
+            {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded = {setLoaded} /> : null}
             {loaded ?
                 <NavMargin user={user} setLoaded={setLoaded} />
                 :
@@ -55,13 +58,12 @@ const TweetPage = (props) => {
                             <MainTweet user={user} setFireApiCall={setFireApiCall} theTweet={theTweet} setLoaded={setLoaded} />
                         :
                         <div className="centerPage">
-                            <h2>
+                            <h3 className="centerIt">
                                 Oops! We can't find that Tweet
-                            </h2>
+                            </h3>
                         </div>
                     }
-
-                    {/*<TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} />*/}
+                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} />
                 </div>
                 :
                 <div className="spin centerPage">

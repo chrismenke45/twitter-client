@@ -24,16 +24,28 @@ function CommentPopUp(props) {
     const imageButtonRef = useRef(null)
 
     const handleTextChange = (e) => {
-        setTweetInfo({ ...tweetInfo, tweetText: e.target.value })
+        setTweetInfo(prev => ({ ...prev, tweetText: e.target.value }))
     }
 
     const handleImageChange = (e) => {
+        console.log('fire1')
         imageRef.current.src = URL.createObjectURL(e.target.files[0])
-        setTweetInfo({ ...tweetInfo, img: e.target.files[0] })
+        setTweetInfo(prev => ({
+            ...prev,
+            img: e.target.files[0],
+        }))
+        console.log('fire2')
     }
 
     const imageButtonClick = () => {
         imageButtonRef.current.click()
+    }
+
+    const removeImage = () => {
+        URL.revokeObjectURL(imageRef.current.src)
+        imageRef.current.src = null
+        imageButtonRef.current.value = ""
+        setTweetInfo(prev => ({ ...prev, img: null, imgPreview: null }));
     }
 
     let replyClose = () => {
@@ -75,6 +87,9 @@ function CommentPopUp(props) {
                         tweetText: '',
                         img: null,
                     })
+                    imageButtonRef.current.value = ""
+                    URL.revokeObjectURL(imageRef.current.src)
+                    imageRef.current.src = null
                 })
                 .catch(error => {
                     console.error('Error:', error)
@@ -97,9 +112,12 @@ function CommentPopUp(props) {
             <form className='mainTweetReply' onSubmit={replySubmit}>
                 <FontAwesomeIcon icon={faXmark} className="px20" onClick={replyClose} />
                 <div className="replyTweetContainer" onClick={(e) => navigateToTweet(e)}>
-                    <div className="singleTweetHeader">
-                        <div className="userPicContainer">
-                            <img src={commentTweet.author.profile_image} alt="no img" className="userPic"></img>
+                    <div className="popUpHeader">
+                        <div className='popUpHeaderLeft'>
+                            <div className="userPicContainer">
+                                <img src={commentTweet.author.profile_image} alt="no img" className="userPic"></img>
+                            </div>
+                            <div className='greyLineVertical'></div>
                         </div>
                         <div className="tweetContent">
                             <Link to={`/profile/${commentTweet.author._id}`} onClick={() => setLoaded(false)} className=' routerLink tweetUser'><span className='lessBold'>{commentTweet.author.chosenName} </span><span className="greyText">@{commentTweet.author.username} &#183; {timeFinder(commentTweet.created)}</span></Link>
@@ -117,15 +135,19 @@ function CommentPopUp(props) {
                                 :
                                 null
                             }
+                            <p className='popUpReplyTo greyText'>Replying to <span className='blueText'>@{commentTweet.author.username}</span></p>
                         </div>
                     </div>
                 </div>
-                <p className='mainTweetReplyHeader greyText'>Replying to <span className='blueText'>@{commentTweet.author.username}</span></p>
                 <div className='mainTweetReplyContent'>
                     <div className="userPicContainer">
                         <img src={user.userObj.profile_image} alt="no img" className="userPic"></img>
                     </div>
                     <textarea name="tweetText" placeholder="Tweet your reply" maxLength="140" value={tweetInfo.tweetText} onChange={e => handleTextChange(e)}></textarea>
+                </div>
+                <div className='homeTopSelectedImg' hidden={tweetInfo.img ? false : true}>
+                    <FontAwesomeIcon icon={faXmark} className="icon" onClick={removeImage} hidden={tweetInfo.img ? false : true} />
+                    <img ref={imageRef} alt="" hidden={tweetInfo.img ? false : true}></img>
                 </div>
                 <div className="mainTweetReplyFooter">
                     <span className=''>

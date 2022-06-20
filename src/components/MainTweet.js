@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faRetweet, faImage } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faRetweet, faImage, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 import { Link, useNavigate } from 'react-router-dom';
 import { decode } from 'html-entities';
@@ -27,16 +27,26 @@ function MainTweet(props) {
     const imageButtonRef = useRef(null)
 
     const handleTextChange = (e) => {
-        setTweetInfo({ ...tweetInfo, tweetText: e.target.value })
+        setTweetInfo(prev => ({ ...prev, tweetText: e.target.value }))
     }
 
     const handleImageChange = (e) => {
         imageRef.current.src = URL.createObjectURL(e.target.files[0])
-        setTweetInfo({ ...tweetInfo, img: e.target.files[0] })
+        setTweetInfo(prev => ({
+            ...prev,
+            img: e.target.files[0],
+        }))
     }
 
     const imageButtonClick = () => {
         imageButtonRef.current.click()
+    }
+
+    const removeImage = () => {
+        URL.revokeObjectURL(imageRef.current.src)
+        imageRef.current.src = null
+        imageButtonRef.current.value = ""
+        setTweetInfo(prev => ({ ...prev, img: null, imgPreview: null }));
     }
 
     let replySubmit = (e) => {
@@ -73,6 +83,9 @@ function MainTweet(props) {
                         tweetText: '',
                         img: null,
                     })
+                    imageButtonRef.current.value = ""
+                    URL.revokeObjectURL(imageRef.current.src)
+                    imageRef.current.src = null
                 })
                 .catch(error => {
                     console.error('Error:', error)
@@ -263,6 +276,10 @@ function MainTweet(props) {
                         <img src={user.userObj.profile_image} alt="no img" className="userPic"></img>
                     </div>
                     <textarea name="tweetText" placeholder="Tweet your reply" maxLength="140" value={tweetInfo.tweetText} onChange={e => handleTextChange(e)}></textarea>
+                </div>
+                <div className='homeTopSelectedImg' hidden={tweetInfo.img ? false : true}>
+                    <FontAwesomeIcon icon={faXmark} className="icon" onClick={removeImage} hidden={tweetInfo.img ? false : true} />
+                    <img ref={imageRef} alt="" hidden={tweetInfo.img ? false : true}></img>
                 </div>
                 <div className="mainTweetReplyFooter">
                     <span className=''>

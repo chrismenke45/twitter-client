@@ -3,11 +3,11 @@ import SearchBar from "./SearchBar";
 import SuggestedAdds from "./SuggestedAdds"
 
 const SearchMargin = (props) => {
-    const { user } = props
+    const { user, setFireApiCall, fireApiCall } = props
     return (
         <aside id="searchMargin">
             <SearchBar />
-            <SuggestedAdds user={user}/>
+            <SuggestedAdds user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} />
         </aside>
     )
 }

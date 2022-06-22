@@ -17,9 +17,8 @@ let navigate = useNavigate()
         navigate('/')
     }, []);
     return (
-        <div>
-            <h1> SetCred</h1>
-            <Link to='/'><button>Home</button></Link>
+        <div className="fade-in-text">
+            <h1>Bringing your Twitter information to Fake Twitter.  If this doesn't redirect in 5 seconds try signing in again</h1>
         </div>
     );
 }

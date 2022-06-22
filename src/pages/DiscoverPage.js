@@ -72,7 +72,7 @@ const DiscoverPage = (props) => {
                 </div>
             }
             {loaded ?
-                <SearchMargin user={user} />
+                <SearchMargin user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} />
                 :
                 null
             }

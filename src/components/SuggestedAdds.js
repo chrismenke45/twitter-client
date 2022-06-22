@@ -3,23 +3,23 @@ import SuggestedAdd from "./SuggestedAdd";
 import fetchSuggestedUsers from '../functions/fetch/fetchSuggestedUsers'
 
 const SuggestedAdds = (props) => {
-    const { user } = props;
+    const { user, setFireApiCall, fireApiCall } = props;
 
-    const [users, setUsers] = useState([]);
+    const [suggestedUsers, setSuggestedUsers] = useState([]);
 
     useEffect(() => {
         fetchSuggestedUsers(user)
         .then(fetchedUsers => {
-            setUsers(fetchedUsers)
+            setSuggestedUsers(fetchedUsers)
         })
-    }, [])
+    }, [fireApiCall])
     return (
         <div id="suggestedAdds">
-            {users && users.length !== 0 ?
+            {suggestedUsers && suggestedUsers.length !== 0 ?
                 <div id="suggestedAdds">
                     <h3>Who to follow</h3>
-                    {users.map((user, index) => {
-                        return <SuggestedAdd suggestedUser={user} key={user._id} />
+                    {suggestedUsers.map((suggestedUser) => {
+                        return <SuggestedAdd suggestedUser={suggestedUser} user={user} setFireApiCall={setFireApiCall} key={suggestedUser._id} />
                     })}
                 </div>
                 :

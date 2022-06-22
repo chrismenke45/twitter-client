@@ -712,7 +712,14 @@ nav {
   will-change: transform;
 }
 
+/* fade in set cred screen*/
 
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.fade-in-text { animation: fadeIn 5s; }
 
 
 

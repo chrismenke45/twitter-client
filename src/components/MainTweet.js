@@ -175,7 +175,12 @@ function MainTweet(props) {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        let url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + (retweetInfo ? retweetInfo._id : theTweet._id) + '/delete';
+        let url
+        if (theTweet.retweets.some(e => e.author == theTweet.author._id)) {
+            url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + theTweet.retweets.filter(e => e.author == user.userObj._id)[0]._id + '/delete';
+        } else {
+            url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + (retweetInfo ? retweetInfo._id : theTweet._id) + '/delete';
+        }
         const options = {
             method: 'DELETE',
             headers: {

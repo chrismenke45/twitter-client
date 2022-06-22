@@ -782,3 +782,8 @@ nav {
   }
 }
 
+.redButton {
+  color: #e33832 !important;
+  border: #e33832 1px solid !important;
+  background-color: #6a1719 !important;
+}

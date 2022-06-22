@@ -14,12 +14,13 @@ import fetchProfileTweets from "../functions/fetch/fetchProfileTweets";
 
 
 const ProfilePage = (props) => {
-    const { tweets, setTweets, loaded, setLoaded, user, setUser, fireApiCall, setFireApiCall } = props
+    const { tweets, setTweets, /*loaded, setLoaded,*/ user, setUser, fireApiCall, setFireApiCall } = props
 
     const { profileid } = useParams()
 
     const [postType, setPostType] = useState('replies')
     const [profile, setProfile] = useState(null)
+    const [loaded, setLoaded] = useState(false)
     const [internalLoaded, setInternalLoaded] = useState(false)
     const [commentTweet, setCommentTweet] = useState(null)
 

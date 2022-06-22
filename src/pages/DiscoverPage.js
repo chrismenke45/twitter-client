@@ -13,12 +13,12 @@ import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
 
 const DiscoverPage = (props) => {
-    const { tweets, setTweets, loaded, setLoaded, user, setUser, fireApiCall, setFireApiCall } = props
+    const { tweets, setTweets, /*loaded, setLoaded,*/ user, setUser, fireApiCall, setFireApiCall } = props
 
     let navigate = useNavigate()
 
     const [commentTweet, setCommentTweet] = useState(null)
-    const [commentOpen, setCommentOpen] = useState(true)
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
         if (!checkForUser(getUser())) {
@@ -28,13 +28,6 @@ const DiscoverPage = (props) => {
             fetchTweets()
                 .then(tweetsArray => {
                     setTweets(tweetsArray)
-                    /*if (tweetsArray[0].commentOf) {
-                        setCommentTweet(tweetsArray[0].commentOf)
-                    } else if (tweetsArray[0].retweetOf) {
-                        setCommentTweet(tweetsArray[0].retweetOf)
-                    } else {
-                        setCommentTweet(tweetsArray[0])
-                    }*/
                     setLoaded(true)
                 })
                 .catch(err => {

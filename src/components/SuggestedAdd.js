@@ -1,5 +1,5 @@
-import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import checkForUser from "../functions/checkForUser";
 
@@ -8,7 +8,7 @@ const SuggestedAdd = (props) => {
     const { suggestedUser, user, setFireApiCall } = props
 
     let navigate = useNavigate()
-    
+
 
     const followSubmit = () => {
         if (!checkForUser(user)) {
@@ -34,6 +34,13 @@ const SuggestedAdd = (props) => {
                 return navigate('/error')
             })
     }
+    let [followButtonText, setFollowButtonText] = useState('Following')
+    const followButtonHover = () => {
+        setFollowButtonText('Unfollow')
+    }
+    const followButtonUnhover = () => {
+        setFollowButtonText('Following')
+    }
     return (
         <div className="suggestedAddContainer">
             <div className="suggestedUser">
@@ -45,7 +52,14 @@ const SuggestedAdd = (props) => {
                     <p className="greyText">@{suggestedUser.username}</p>
                 </div>
             </div>
-            <button onClick={followSubmit}>{suggestedUser.followers.some(e => e == user.userObj._id) ? 'Unfollow' : 'Follow'}</button>
+            <button
+                onClick={followSubmit}
+                onMouseEnter={followButtonHover}
+                onMouseLeave={followButtonUnhover}
+                className={suggestedUser.followers.some(e => e == user.userObj._id) && followButtonText == 'Unfollow' ? 'redButton' : null}
+            >
+                {suggestedUser.followers.some(e => e == user.userObj._id) ? followButtonText : 'Follow'}
+            </button>
         </div>
     )
 }

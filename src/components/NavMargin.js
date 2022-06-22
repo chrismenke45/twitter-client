@@ -17,7 +17,7 @@ const NavMargin = (props) => {
                     <p>Home</p>
                 </button>
             </Link>
-            <Link to={`/profile/${user.userObj._id}`} onClick={() => setLoaded(false)} className='routerLink'>
+            <Link to={`/profile/${user.userObj._id}`} className='routerLink'>
                 <button className='navButton'>
                     <FontAwesomeIcon icon={faUser} className="" />
                     <p>Profile</p>

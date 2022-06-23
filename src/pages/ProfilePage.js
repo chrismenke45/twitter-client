@@ -23,6 +23,7 @@ const ProfilePage = (props) => {
     const [loaded, setLoaded] = useState(false)
     const [internalLoaded, setInternalLoaded] = useState(false)
     const [commentTweet, setCommentTweet] = useState(null)
+    const [displayCount, setDisplayCount] = useState(12)
 
     let navigate = useNavigate()
 
@@ -31,7 +32,7 @@ const ProfilePage = (props) => {
             navigate('/login')
         } else {
             setUser(getUser())
-            Promise.all([fetchProfileUser(getUser(), profileid), fetchProfileTweets(getUser(), profileid, postType)])
+            Promise.all([fetchProfileUser(getUser(), profileid), fetchProfileTweets(getUser(), profileid, postType, displayCount)])
                 .then(responses => {
                     setProfile(responses[0]);
                     setTweets(responses[1]);
@@ -46,20 +47,34 @@ const ProfilePage = (props) => {
 
 
     }, [fireApiCall])
+
+    const scrollIncreaseDisplayCount = (e) => {
+        if (e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight && tweets.length % 12 === 0 && tweets.length !== 0 && tweets.length !== displayCount - 12) {
+            setDisplayCount(prev => prev + 12);
+            setFireApiCall(prev => prev + 1)
+        }
+    }
     return (
         <div className="outerMost">
-            {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded = {setLoaded} /> : null}
+            {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} /> : null}
             {loaded ?
-                <NavMargin user={user} setLoaded={setLoaded} />
+                <NavMargin user={user} setFireApiCall={setFireApiCall} />
                 :
                 null
             }
             {loaded ?
                 Object.keys(profile).length !== 0 ?
-                    <div className="centerPage">
-                        <ProfileTop user={user} setFireApiCall={setFireApiCall} postType={postType} setPostType={setPostType} profile={profile} setInternalLoaded={setInternalLoaded} />
+                    <div className="centerPage" onScroll={scrollIncreaseDisplayCount}>
+                        <ProfileTop user={user} setFireApiCall={setFireApiCall} postType={postType} setPostType={setPostType} profile={profile} setInternalLoaded={setInternalLoaded} setDisplayCount={setDisplayCount} />
                         {internalLoaded ?
-                            <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet}/>
+                            tweets.length !== 0 ?
+                                <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} setDisplayCount={setDisplayCount} displayCount={displayCount} />
+                                :
+                                <div className="noMedia">
+                                    <p className="px14 lessBold">This user does not have any {postType} yet</p>
+                                </div>
+
+
                             :
                             <div className="spinLocalParent">
                                 <div className="spinLocal">
@@ -82,7 +97,7 @@ const ProfilePage = (props) => {
                 </div>
             }
             {loaded ?
-                <SearchMargin user={user} />
+                <SearchMargin user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} />
                 :
                 null
             }

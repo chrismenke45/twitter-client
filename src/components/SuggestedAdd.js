@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import checkForUser from "../functions/checkForUser";
 
@@ -43,15 +43,19 @@ const SuggestedAdd = (props) => {
     }
     return (
         <div className="suggestedAddContainer">
-            <div className="suggestedUser">
+            <Link 
+            to={`/profile/${suggestedUser._id}`}
+            className="suggestedUser routerLink"
+            onClick={() => setFireApiCall(prev => prev + 1)}
+            >
                 <div className="userPicContainer">
-                    <img src={suggestedUser.profile_image} alt="" className="userPic"></img>
+                    <img src={suggestedUser.profile_image || 'https://i.pinimg.com/originals/e5/91/dc/e591dc82326cc4c86578e3eeecced792.png'} alt="" className="userPic"></img>
                 </div>
                 <div>
                     <p>{suggestedUser.chosenName}</p>
                     <p className="greyText">@{suggestedUser.username}</p>
                 </div>
-            </div>
+            </Link>
             <button
                 onClick={followSubmit}
                 onMouseEnter={followButtonHover}

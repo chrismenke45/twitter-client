@@ -1,6 +1,6 @@
-function fetchProfileTweets(user, profileid, postType) {
+function fetchProfileTweets(user, profileid, postType, displayCount) {
     let apiUrl = process.env.REACT_APP_productionAPIurl || process.env.REACT_APP_developmentAPIurl
-    let url = apiUrl + '/profile/' + profileid + '/' + postType
+    let url = apiUrl + '/profile/' + profileid + '/' + postType + (typeof displayCount === 'number' ? '?postQuantity=' + displayCount : '')
     const options = {
         method: 'GET',
         headers: {

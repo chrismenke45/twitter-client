@@ -153,7 +153,7 @@ function SingleTweet(props) {
     }
 
     return (
-        <article className="singleTweetContainer whiteHighlightColor" onClick={(e) => navigateToTweet(e)}>
+        <article className="singleTweetContainer whiteHighlightColor pointer" onClick={(e) => navigateToTweet(e)}>
             {retweetInfo && retweetInfo.author ?
                 <div className='retweetedBy greyColor' data-nonav={true}>
                     <FontAwesomeIcon icon={faRetweet} data-nonav={true} />
@@ -184,9 +184,9 @@ function SingleTweet(props) {
                     }
                 </div>
             </div>
-            <div data-nonav={true} className="singleTweetFooter">
+            <div data-nonav={true} className="singleTweetFooter noPointer">
                 <span data-nonav={true} className='footerIcon commentIcon'>
-                    <FontAwesomeIcon data-nonav={true} icon={faComment} className="icon" data-nonav={true} onClick={commentOpen}/>
+                    <FontAwesomeIcon data-nonav={true} icon={faComment} className="icon pointer" data-nonav={true} onClick={commentOpen}/>
                     {tweet.comments.length ?
                         <p data-nonav={true}>{tweet.comments.length}</p>
                         :
@@ -195,7 +195,7 @@ function SingleTweet(props) {
 
                 </span>
                 <span data-nonav={true} className='footerIcon retweetIcon'>
-                    <FontAwesomeIcon icon={faRetweet} data-nonav={true} className={tweet.retweets && user && user.userObj && tweet.retweets.some(e => e.author === user.userObj._id) ? "icon retweeted" : "icon"} onClick={retweetSubmit} />
+                    <FontAwesomeIcon icon={faRetweet} data-nonav={true} className={tweet.retweets && user && user.userObj && tweet.retweets.some(e => e.author === user.userObj._id) ? "icon retweeted pointer" : "icon pointer"} onClick={retweetSubmit} />
                     {tweet.retweets.length ?
                         <p data-nonav={true} className="">{tweet.retweets.length}</p>
                         :
@@ -203,7 +203,7 @@ function SingleTweet(props) {
                     }
                 </span>
                 <span data-nonav={true} className="footerIcon heartIcon">
-                    <FontAwesomeIcon icon={faHeart} data-nonav={true} className={tweet.likes && user && user.userObj && tweet.likes.includes(user.userObj._id) ? "icon liked" : "icon"} onClick={likeSubmit} />
+                    <FontAwesomeIcon icon={faHeart} data-nonav={true} className={tweet.likes && user && user.userObj && tweet.likes.includes(user.userObj._id) ? "icon liked pointer" : "icon pointer"} onClick={likeSubmit} />
                     {tweet.likes.length ?
                         <p data-nonav={true} className="">{tweet.likes.length}</p>
                         :

@@ -17,9 +17,19 @@ function HomeTop(props) {
     )
     const imageRef = useRef(null)
     const imageButtonRef = useRef(null)
+    const formRef = useRef(null)
 
     const handleTextChange = (e) => {
-        setTweetInfo(prev => ({ ...prev, tweetText: e.target.value }))
+        console.log(e.keyCode)
+        e = e || window.event;
+        
+        if (e.keyCode == 13) {
+            formRef.submit()
+            return false;
+        } else {
+            setTweetInfo(prev => ({ ...prev, tweetText: e.target.value }))
+        }
+        
     }
 
     const handleImageChange = (e) => {
@@ -45,11 +55,11 @@ function HomeTop(props) {
     let navigate = useNavigate()
 
     let tweetSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(e);
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        if (tweetInfo.tweetText == '' && tweetInfo.img == null) {
+        if (tweetInfo.tweetText == '' && tweetInfo.img == null || tweetInfo.tweetText.trim().length === 0) {
             return
         }
         else {
@@ -57,7 +67,7 @@ function HomeTop(props) {
             let formData = new FormData()
             formData.append('text', tweetInfo.tweetText)
             if (tweetInfo.tweetText !== '') {
-                formData.append('text', tweetInfo.tweetText)
+                formData.append('text', tweetInfo.tweetText.trim())
             }
             if (tweetInfo.img !== null) {
                 formData.append('img', tweetInfo.img)
@@ -88,7 +98,7 @@ function HomeTop(props) {
         }
     }
     return (
-        <form onSubmit={tweetSubmit} className="topContainer">
+        <form onSubmit={tweetSubmit}  ref={formRef} className="topContainer">
             <div className='homeTopTitle'>
                 <h1>Home</h1>
             </div>

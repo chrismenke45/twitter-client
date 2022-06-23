@@ -1,6 +1,6 @@
-function fetchMainTweet(user, tweetid) {
+function fetchMainTweet(user, tweetid, displayCount) {
     let apiUrl = process.env.REACT_APP_productionAPIurl || process.env.REACT_APP_developmentAPIurl
-    let url = apiUrl + '/tweet/' + tweetid 
+    let url = apiUrl + '/tweet/' + tweetid + (typeof displayCount === 'number' ? '?postQuantity=' + displayCount : '')
     const options = {
         method: 'GET',
         headers: {

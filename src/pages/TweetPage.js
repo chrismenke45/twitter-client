@@ -19,6 +19,7 @@ const TweetPage = (props) => {
 
     const [theTweet, setTheTweet] = useState(null)
     const [commentTweet, setCommentTweet] = useState(null)
+    const [displayCount, setDisplayCount] = useState(12)
 
     let navigate = useNavigate()
 
@@ -27,7 +28,7 @@ const TweetPage = (props) => {
             navigate('/login')
         } else {
             setUser(getUser())
-            fetchMainTweet(getUser(), tweetid)
+            fetchMainTweet(getUser(), tweetid, displayCount)
                 .then(responses => {
                     setTheTweet(responses[0]);
                     setTweets(responses[1]);
@@ -41,16 +42,22 @@ const TweetPage = (props) => {
 
 
     }, [fireApiCall])
+    const scrollIncreaseDisplayCount = (e) => {
+        if (e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight && tweets.length % 12 === 0 && tweets.length !== 0 && tweets.length !== displayCount - 12) {
+            setDisplayCount(prev => prev + 12);
+            setFireApiCall(prev => prev + 1)
+        }
+    }
     return (
         <div className="outerMost">
             {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded = {setLoaded} /> : null}
             {loaded ?
-                <NavMargin user={user} setLoaded={setLoaded} />
+                <NavMargin user={user} setFireApiCall={setFireApiCall} />
                 :
                 null
             }
             {loaded ?
-                <div className="centerPage">
+                <div className="centerPage" onScroll={scrollIncreaseDisplayCount}>
                     {theTweet && Object.keys(theTweet).length !== 0 ?
                         theTweet.retweetOf ?
                             <MainTweet user={user} setFireApiCall={setFireApiCall} theTweet={theTweet.retweetOf} setLoaded={setLoaded} retweetInfo={theTweet} />
@@ -63,7 +70,7 @@ const TweetPage = (props) => {
                             </h3>
                         </div>
                     }
-                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} />
+                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} setDisplayCount={setDisplayCount} displayCount={displayCount} />
                 </div>
                 :
                 <div className="spin centerPage">

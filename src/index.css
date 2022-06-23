@@ -83,6 +83,18 @@ code {
   max-height: 100vh;
   overflow-x: visible;
 }
+.tweetDisplay {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+  align-items: center;
+}
+
+.tweetDisplay > button {
+  width: 150px;
+}
+
 
 .routerLink {
   text-decoration: none;
@@ -98,6 +110,17 @@ code {
   border: none;
   margin: 10px;
   cursor: pointer;
+}
+.pointer {
+  cursor: pointer;
+}
+.noPointer {
+  cursor: default;
+}
+.redButton {
+  color: #e33832 !important;
+  border: #e33832 1px solid !important;
+  background-color: #6a1719 !important;
 }
 
 
@@ -431,6 +454,12 @@ textarea:focus, input:focus{
   color: var(--black-color) !important;
 }
 
+.noMedia {
+  width: 100%;
+  text-align: center;
+  margin: 20px 10px;
+}
+
 /* Main Tweet */
 .mainTweetTitle {
   display: flex;
@@ -542,12 +571,16 @@ nav {
 .navButton {
   font-size: 22px;
   display: flex;
+  height: 46px;
+  width: 46px;
   flex-direction: row;
   padding: 12px;
   border-radius: 24px;
   border: none;
   cursor: pointer;
   background-color: white;
+  position: relative;
+  margin: 3px 0;
 }
 .navButton > p {
   padding: 0 10px;
@@ -732,6 +765,20 @@ nav {
   nav {
     align-items: center;
   }
+  .navButton:hover > p {
+    display: block;
+    position: absolute;
+    bottom: -15px;
+    font-size: 10px;  
+    background-color: var(--light-grey-color); 
+    left: 0px;
+    width: 46px;   
+    z-index: 1;
+    border-radius: 3px;
+    padding: 0;
+    text-align: center;
+    }
+  
 }
 
 @media only screen and (max-width: 1000px) {
@@ -773,6 +820,12 @@ nav {
     margin: 0;
     height: 46px;
   }
+  .navButton {
+    margin: 0;
+  }
+  .navButton:hover > p {
+    display: none;
+    }
   .centerPage {
     width: 100%;
     flex: 1 1 auto;
@@ -782,8 +835,4 @@ nav {
   }
 }
 
-.redButton {
-  color: #e33832 !important;
-  border: #e33832 1px solid !important;
-  background-color: #6a1719 !important;
-}
+

@@ -6,6 +6,7 @@ import NavMargin from "../components/NavMargin";
 import TweetDisplay from "../components/TweetDisplay";
 import MainTweet from "../components/MainTweet";
 import CommentPopUp from "../components/CommentPopUp";
+import UnablePopUp from "../components/UnablePopUp";
 
 import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
@@ -20,6 +21,7 @@ const TweetPage = (props) => {
     const [theTweet, setTheTweet] = useState(null)
     const [commentTweet, setCommentTweet] = useState(null)
     const [displayCount, setDisplayCount] = useState(12)
+    const [showUnable, setShowUnable] = useState(false)
 
     let navigate = useNavigate()
 
@@ -48,8 +50,16 @@ const TweetPage = (props) => {
             setFireApiCall(prev => prev + 1)
         }
     }
+    useEffect(() => {
+        if(showUnable) {
+            setTimeout(() => {
+                setShowUnable(false)
+              }, 500)
+        }
+    }, [showUnable])
     return (
         <div className="outerMost" onScroll={scrollIncreaseDisplayCount}>
+            {showUnable ? <UnablePopUp /> : null}
             {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded = {setLoaded} /> : null}
             {loaded ?
                 <NavMargin user={user} setFireApiCall={setFireApiCall} />
@@ -78,7 +88,7 @@ const TweetPage = (props) => {
                 </div>
             }
             {loaded ?
-                <SearchMargin user={user} />
+                <SearchMargin user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} setShowUnable={setShowUnable}/>
                 :
                 null
             }

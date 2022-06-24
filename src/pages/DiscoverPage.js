@@ -7,6 +7,7 @@ import TweetDisplay from "../components/TweetDisplay";
 import HomeTop from "../components/HomeTop";
 import NavMargin from "../components/NavMargin";
 import CommentPopUp from "../components/CommentPopUp";
+import UnablePopUp from "../components/UnablePopUp";
 
 import fetchTweets from "../functions/fetch/fetchTweets";
 import getUser from "../functions/getUser";
@@ -20,6 +21,7 @@ const DiscoverPage = (props) => {
     const [commentTweet, setCommentTweet] = useState(null)
     const [loaded, setLoaded] = useState(false)
     const [displayCount, setDisplayCount] = useState(12)
+    const [showUnable, setShowUnable] = useState(false)
 
     useEffect(() => {
         if (!checkForUser(getUser())) {
@@ -40,6 +42,14 @@ const DiscoverPage = (props) => {
 
     }, [fireApiCall])
 
+    useEffect(() => {
+        if(showUnable) {
+            setTimeout(() => {
+                setShowUnable(false)
+              }, 500)
+        }
+    }, [showUnable])
+
     const scrollIncreaseDisplayCount = (e) => {
         if (e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight && tweets.length % 12 === 0 && tweets.length !== 0 && tweets.length !== displayCount - 12) {
             setDisplayCount(prev => prev + 12);
@@ -49,6 +59,7 @@ const DiscoverPage = (props) => {
 
     return (
         <div className="outerMost" onScroll={scrollIncreaseDisplayCount}>
+            {showUnable ? <UnablePopUp /> : null}
             {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} /> : null}
             {loaded ?
                 <NavMargin user={user} setFireApiCall={setFireApiCall} />
@@ -73,7 +84,7 @@ const DiscoverPage = (props) => {
                 </div>
             }
             {loaded ?
-                <SearchMargin user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} />
+                <SearchMargin user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} setShowUnable={setShowUnable}/>
                 :
                 null
             }

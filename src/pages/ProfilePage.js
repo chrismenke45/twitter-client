@@ -6,6 +6,7 @@ import NavMargin from "../components/NavMargin";
 import ProfileTop from "../components/ProfileTop";
 import TweetDisplay from "../components/TweetDisplay";
 import CommentPopUp from "../components/CommentPopUp";
+import UnablePopUp from "../components/UnablePopUp";
 
 import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
@@ -24,6 +25,7 @@ const ProfilePage = (props) => {
     const [internalLoaded, setInternalLoaded] = useState(false)
     const [commentTweet, setCommentTweet] = useState(null)
     const [displayCount, setDisplayCount] = useState(12)
+    const [showUnable, setShowUnable] = useState(false)
 
     let navigate = useNavigate()
 
@@ -54,8 +56,16 @@ const ProfilePage = (props) => {
             setFireApiCall(prev => prev + 1)
         }
     }
+    useEffect(() => {
+        if(showUnable) {
+            setTimeout(() => {
+                setShowUnable(false)
+              }, 500)
+        }
+    }, [showUnable])
     return (
         <div className="outerMost" onScroll={scrollIncreaseDisplayCount}>
+            {showUnable ? <UnablePopUp /> : null}
             {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} /> : null}
             {loaded ?
                 <NavMargin user={user} setFireApiCall={setFireApiCall} />
@@ -97,7 +107,7 @@ const ProfilePage = (props) => {
                 </div>
             }
             {loaded ?
-                <SearchMargin user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} />
+                <SearchMargin user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} setShowUnable={setShowUnable} />
                 :
                 null
             }

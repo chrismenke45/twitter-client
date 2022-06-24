@@ -71,6 +71,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/*
 .outerMost {
   display: flex;
   flex-direction: row;
@@ -83,6 +84,28 @@ code {
   max-height: 100vh;
   overflow-x: visible;
 }
+*/
+
+
+.outerMost {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  overflow-y: scroll;
+}
+.centerPage {
+  flex: 0 1 598px;
+}
+.sticky {
+  height: 400px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 5px;
+}
+
+
 .tweetDisplay {
   width: 100%;
   display: flex;
@@ -90,7 +113,6 @@ code {
   justify-items: flex-start;
   align-items: center;
 }
-
 .tweetDisplay > button {
   width: 150px;
 }
@@ -559,7 +581,6 @@ textarea:focus, input:focus{
 }
  
 /* Navbar */
-
 nav {
   flex: 0 1 200px;
   display: flex;
@@ -763,7 +784,7 @@ nav {
     display: none;
   }
   nav {
-    align-items: center;
+    align-items: flex-end;
   }
   .navButton:hover > p {
     display: block;
@@ -808,6 +829,9 @@ nav {
     align-items: center;
     margin: 0;
     height: 100vh;
+  }
+  .centerPage {
+    overflow-y: scroll;
   }
 
   nav {

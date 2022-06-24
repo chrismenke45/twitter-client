@@ -52,6 +52,13 @@ function CommentPopUp(props) {
         setCommentTweet(null)
     }
 
+    const enterFormSubmit = (e) => {
+        if (e.keyCode === 13 || e.key === 'Enter') {
+            replySubmit(e)
+            return
+        }
+    }
+
     let replySubmit = (e) => {
         e.preventDefault();
         if (!checkForUser(user)) {
@@ -143,7 +150,7 @@ function CommentPopUp(props) {
                     <div className="userPicContainer">
                         <img src={user.userObj.profile_image} alt="no img" className="userPic"></img>
                     </div>
-                    <textarea name="tweetText" placeholder="Tweet your reply" maxLength="140" value={tweetInfo.tweetText} onChange={e => handleTextChange(e)}></textarea>
+                    <textarea name="tweetText" placeholder="Tweet your reply" maxLength="140" value={tweetInfo.tweetText} onChange={e => handleTextChange(e)} onKeyUp={e => enterFormSubmit(e)}></textarea>
                 </div>
                 <div className='homeTopSelectedImg' hidden={tweetInfo.img ? false : true}>
                     <FontAwesomeIcon icon={faXmark} className="icon" onClick={removeImage} hidden={tweetInfo.img ? false : true} />

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 const NavMargin = (props) => {
     const { user, setFireApiCall } = props
     return (
-        <nav>
+        <nav className="sticky">
             <Link to='/login' className='routerLink'>
                 <button className="navButton">
                     <FontAwesomeIcon icon={faTwitter} id="marginBird" className="" />

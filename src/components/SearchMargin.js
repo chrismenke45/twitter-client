@@ -5,7 +5,7 @@ import SuggestedAdds from "./SuggestedAdds"
 const SearchMargin = (props) => {
     const { user, setFireApiCall, fireApiCall } = props
     return (
-        <aside id="searchMargin">
+        <aside id="searchMargin" className="sticky">
             <SearchBar />
             <SuggestedAdds user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} />
         </aside>

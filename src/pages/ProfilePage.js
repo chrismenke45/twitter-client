@@ -55,7 +55,7 @@ const ProfilePage = (props) => {
         }
     }
     return (
-        <div className="outerMost">
+        <div className="outerMost" onScroll={scrollIncreaseDisplayCount}>
             {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} /> : null}
             {loaded ?
                 <NavMargin user={user} setFireApiCall={setFireApiCall} />
@@ -64,11 +64,11 @@ const ProfilePage = (props) => {
             }
             {loaded ?
                 Object.keys(profile).length !== 0 ?
-                    <div className="centerPage" onScroll={scrollIncreaseDisplayCount}>
+                    <div className="centerPage"  onScroll={scrollIncreaseDisplayCount}>
                         <ProfileTop user={user} setFireApiCall={setFireApiCall} postType={postType} setPostType={setPostType} profile={profile} setInternalLoaded={setInternalLoaded} setDisplayCount={setDisplayCount} />
                         {internalLoaded ?
                             tweets.length !== 0 ?
-                                <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} setDisplayCount={setDisplayCount} displayCount={displayCount} />
+                                <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} />
                                 :
                                 <div className="noMedia">
                                     <p className="px14 lessBold">This user does not have any {postType} yet</p>

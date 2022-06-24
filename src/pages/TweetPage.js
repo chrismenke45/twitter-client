@@ -49,7 +49,7 @@ const TweetPage = (props) => {
         }
     }
     return (
-        <div className="outerMost">
+        <div className="outerMost" onScroll={scrollIncreaseDisplayCount}>
             {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded = {setLoaded} /> : null}
             {loaded ?
                 <NavMargin user={user} setFireApiCall={setFireApiCall} />
@@ -57,7 +57,7 @@ const TweetPage = (props) => {
                 null
             }
             {loaded ?
-                <div className="centerPage" onScroll={scrollIncreaseDisplayCount}>
+                <div className="centerPage"  onScroll={scrollIncreaseDisplayCount}>
                     {theTweet && Object.keys(theTweet).length !== 0 ?
                         theTweet.retweetOf ?
                             <MainTweet user={user} setFireApiCall={setFireApiCall} theTweet={theTweet.retweetOf} setLoaded={setLoaded} retweetInfo={theTweet} />
@@ -70,7 +70,7 @@ const TweetPage = (props) => {
                             </h3>
                         </div>
                     }
-                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} setDisplayCount={setDisplayCount} displayCount={displayCount} />
+                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} />
                 </div>
                 :
                 <div className="spin centerPage">

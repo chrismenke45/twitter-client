@@ -17,19 +17,15 @@ function HomeTop(props) {
     )
     const imageRef = useRef(null)
     const imageButtonRef = useRef(null)
-    const formRef = useRef(null)
 
     const handleTextChange = (e) => {
-        console.log(e.keyCode)
-        e = e || window.event;
-        
-        if (e.keyCode == 13) {
-            formRef.submit()
-            return false;
-        } else {
-            setTweetInfo(prev => ({ ...prev, tweetText: e.target.value }))
+        setTweetInfo(prev => ({ ...prev, tweetText: e.target.value }))
+    }
+    const enterFormSubmit = (e) => {
+        if (e.keyCode === 13 || e.key === 'Enter') {
+            tweetSubmit(e)
+            return
         }
-        
     }
 
     const handleImageChange = (e) => {
@@ -98,7 +94,7 @@ function HomeTop(props) {
         }
     }
     return (
-        <form onSubmit={tweetSubmit}  ref={formRef} className="topContainer">
+        <form onSubmit={tweetSubmit} className="topContainer">
             <div className='homeTopTitle'>
                 <h1>Home</h1>
             </div>
@@ -107,13 +103,13 @@ function HomeTop(props) {
                     <img src={user.userObj.profile_image} alt="no img" className="userPic"></img>
                     {/*<img src="https://imagescdn.wciu.com/kqf4I-1631201589-40-show-BOBS_BURGERS.jpg" alt="no img" className="userPic"></img>*/}
                 </div>
-                <textarea name="tweetText" placeholder="What's Happening?" maxLength="140" value={tweetInfo.tweetText} onChange={e => handleTextChange(e)}></textarea>
+                <textarea name="tweetText" placeholder="What's Happening?" maxLength="140" value={tweetInfo.tweetText} onChange={e => handleTextChange(e)} onKeyUp={e => enterFormSubmit(e)}></textarea>
             </div>
             {/*<img ref={imageRef} alt=""></img>*/}
-                <div className='homeTopSelectedImg' hidden={tweetInfo.img ? false : true}>
-                    <FontAwesomeIcon icon={faXmark} className="icon" onClick={removeImage} hidden={tweetInfo.img ? false : true}/>
-                    <img ref={imageRef} alt="" hidden={tweetInfo.img ? false : true}></img>
-                </div>
+            <div className='homeTopSelectedImg' hidden={tweetInfo.img ? false : true}>
+                <FontAwesomeIcon icon={faXmark} className="icon" onClick={removeImage} hidden={tweetInfo.img ? false : true} />
+                <img ref={imageRef} alt="" hidden={tweetInfo.img ? false : true}></img>
+            </div>
 
             <div className="homeTopFooter">
                 <span className=''>

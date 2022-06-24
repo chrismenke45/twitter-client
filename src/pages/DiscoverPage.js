@@ -48,7 +48,7 @@ const DiscoverPage = (props) => {
     }
 
     return (
-        <div className="outerMost">
+        <div className="outerMost" onScroll={scrollIncreaseDisplayCount}>
             {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} /> : null}
             {loaded ?
                 <NavMargin user={user} setFireApiCall={setFireApiCall} />
@@ -59,7 +59,7 @@ const DiscoverPage = (props) => {
                 <div className="centerPage" onScroll={scrollIncreaseDisplayCount}>
                     <HomeTop user={user} setFireApiCall={setFireApiCall} />
                     {tweets.length != 0 ?
-                        <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} setDisplayCount={setDisplayCount} displayCount={displayCount} />
+                        <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} />
                         :
                         <div className="centerIt">
                             <h3>You have no tweets to see. Follow some more people!</h3>
@@ -81,5 +81,41 @@ const DiscoverPage = (props) => {
 
         </div>
     )
+
+    /*
+    <div className="outerMost">
+        {commentTweet ? <CommentPopUp commentTweet={commentTweet} setCommentTweet={setCommentTweet} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} /> : null}
+        {loaded ?
+            <NavMargin user={user} setFireApiCall={setFireApiCall} />
+            :
+            null
+        }
+        {loaded ?
+            <div className="centerPage" onScroll={scrollIncreaseDisplayCount}>
+                <HomeTop user={user} setFireApiCall={setFireApiCall} />
+                {tweets.length != 0 ?
+                    <TweetDisplay tweets={tweets} user={user} setFireApiCall={setFireApiCall} setLoaded={setLoaded} setCommentTweet={setCommentTweet} setDisplayCount={setDisplayCount} displayCount={displayCount} />
+                    :
+                    <div className="centerIt">
+                        <h3>You have no tweets to see. Follow some more people!</h3>
+                    </div>
+                }
+
+            </div>
+            :
+            <div className="spin centerPage">
+
+            </div>
+        }
+        {loaded ?
+            <SearchMargin user={user} setFireApiCall={setFireApiCall} fireApiCall={fireApiCall} />
+            :
+            null
+        }
+
+
+    </div>
+)
+*/
 }
 export default DiscoverPage

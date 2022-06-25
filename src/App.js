@@ -6,11 +6,12 @@ import {
   useNavigate
 } from "react-router-dom";
 
-import DiscoverPage from "./pages/DiscoverPage";
+import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import SetCredentials from "./components/SetCredentials";
 import TweetPage from "./pages/TweetPage";
+import ExplorePage from "./pages/ExplorePage";
 
 
 import getUser from "./functions/getUser";
@@ -29,7 +30,7 @@ function App() {
       <Routes>
         <Route
           path='*'
-          element={<DiscoverPage
+          element={<HomePage
             tweets={tweets}
             setTweets={setTweets}
             loaded={loaded}
@@ -56,6 +57,19 @@ function App() {
         <Route
           path="/tweet/:tweetid"
           element={<TweetPage
+            tweets={tweets}
+            setTweets={setTweets}
+            loaded={loaded}
+            setLoaded={setLoaded}
+            user={user}
+            setUser={setUser}
+            fireApiCall={fireApiCall}
+            setFireApiCall={setFireApiCall}
+          />}>
+        </Route>
+        <Route
+          path='/explore'
+          element={<ExplorePage
             tweets={tweets}
             setTweets={setTweets}
             loaded={loaded}

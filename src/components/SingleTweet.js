@@ -1,12 +1,14 @@
 import timeFinder from '../functions/timeFinder';
 
+import OptionEllipsis from './OptionEllipsis';
+
 import { useNavigate, Link } from 'react-router-dom'
 import { decode } from 'html-entities';
 import getUser from '../functions/getUser';
 import checkForUser from '../functions/checkForUser';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRetweet } from '@fortawesome/free-solid-svg-icons'
+import { faRetweet, faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 
 function SingleTweet(props) {
@@ -103,7 +105,7 @@ function SingleTweet(props) {
         } else {
             url = process.env.REACT_APP_developmentAPIurl + '/tweet/' + (retweetInfo ? retweetInfo._id : tweet._id) + '/delete';
         }
-        
+
         const options = {
             method: 'DELETE',
             headers: {
@@ -148,7 +150,7 @@ function SingleTweet(props) {
                 navigate(`/tweet/${tweet.commentOf._id}`)
             } else {
                 navigate(`/tweet/${tweet._id}`)
-            } 
+            }
         }
     }
 
@@ -183,10 +185,11 @@ function SingleTweet(props) {
                         null
                     }
                 </div>
+                <OptionEllipsis tweet={tweet} setFireApiCall={setFireApiCall} user={user} retweetInfo={retweetInfo} />
             </div>
             <div data-nonav={true} className="singleTweetFooter noPointer">
                 <span data-nonav={true} className='footerIcon commentIcon'>
-                    <FontAwesomeIcon data-nonav={true} icon={faComment} className="icon pointer" data-nonav={true} onClick={commentOpen}/>
+                    <FontAwesomeIcon data-nonav={true} icon={faComment} className="icon pointer" onClick={commentOpen} />
                     {tweet.comments.length ?
                         <p data-nonav={true}>{tweet.comments.length}</p>
                         :

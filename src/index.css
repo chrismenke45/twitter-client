@@ -18,11 +18,17 @@
 .greyText {
   color: var(--grey-color);
 }
+.lightGreyText {
+  color: var(--light-grey-color);
+}
 .blueText {
   color: var(--blue-color);
 }
 .blackText {
   color: var(--black-color);
+}
+.redText {
+  color: red
 }
 .px20 {
   font-size: 20px;
@@ -188,6 +194,63 @@ textarea:focus, input:focus{
   flex-direction: row;
   justify-content: flex-start;
 }
+.ellipsisIcon {
+  justify-self: flex-end;
+  padding: 5px;
+  width: fit-content;
+  position: relative;
+  margin: 0;
+}
+.shiftEllipsisUp {
+  margin: -23px 0 0 0;
+}
+.ellipsisIcon > .icon {
+  padding: 5px;
+  border-radius: 12px;
+  color: var(--grey-color);
+}
+.ellipsisIcon:hover .icon {
+  color: #1DA1F2;
+  background-color: rgba(29, 161, 242, .2);
+}
+.optionBox {
+  height: auto;
+  width: auto;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  position: absolute;
+  box-shadow: 0px 0px 2px 3px var(--light-grey-color);
+  border-radius: 5px;
+  right: 0;
+  top: 0;
+  border: 1px var(--light-grey-color) solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.optionBox:hover .icon {
+  color: initial;
+}
+.optionBoxItem:hover {
+  background-color: var(--white-highlight-color);
+}
+.optionBoxItem {
+  margin: 0;
+  list-style-type: none;
+  white-space: nowrap;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white
+}
+.optionBoxItem > .iconConstantColor {
+  margin: 0 10px;
+}
 .userPicContainer {
   width: var(--user-pic-diameter);
   height: var(--user-pic-diameter);
@@ -208,7 +271,7 @@ textarea:focus, input:focus{
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  flex-shrink: 1;
+  flex: 1;
 }
 
 .tweetContent > .replyInfo {

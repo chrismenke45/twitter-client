@@ -13,7 +13,7 @@ import fetchTweets from "../functions/fetch/fetchTweets";
 import getUser from "../functions/getUser";
 import checkForUser from "../functions/checkForUser";
 
-const DiscoverPage = (props) => {
+const HomePage = (props) => {
     const { tweets, setTweets, /*loaded, setLoaded,*/ user, setUser, fireApiCall, setFireApiCall } = props
 
     let navigate = useNavigate()
@@ -129,4 +129,4 @@ const DiscoverPage = (props) => {
 )
 */
 }
-export default DiscoverPage
+export default HomePage

@@ -26,7 +26,7 @@ const NavMargin = (props) => {
                     <p>Profile</p>
                 </button>
             </Link>
-            <Link to='/Discover' onClick={() => setFireApiCall(prev => prev + 1)} className='routerLink'>
+            <Link to='/explore' onClick={() => setFireApiCall(prev => prev + 1)} className='routerLink'>
                 <button className='navButton'>
                     <FontAwesomeIcon icon={faHashtag} className="" />
                     <p>Explore</p>

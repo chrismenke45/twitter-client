@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -21,6 +21,14 @@ const OptionEllipsis = (props) => {
     const closeShowDelete = () => {
         setShowDeleteOption(false)
     }
+
+    useEffect(() => {
+        if(showDeleteOption) {
+            setTimeout(() => {
+                setShowDeleteOption(false)
+              }, 5000)
+        }
+    }, [showDeleteOption])
 
     const deleteTweet = () => {
         if (!checkForUser(user)) {

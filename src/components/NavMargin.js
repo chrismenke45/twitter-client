@@ -1,35 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faHouse, faUser, faHashtag } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
+import signOutUser from "../functions/signOutUser";
+
 const NavMargin = (props) => {
     const { user, setFireApiCall } = props
+
+    const [showSignOut, setShowSignOut] = useState(false)
+
+    const toggleShowSignOut = () => {
+        setShowSignOut(prev => !prev)
+    }
+
+    const closeShowSignOut = () => {
+        setShowSignOut(false)
+    }
+    const signOut = () => {
+        signOutUser()
+        setFireApiCall(prev => prev + 1)
+    }
+
+    useEffect(() => {
+        if(showSignOut) {
+            setTimeout(() => {
+                setShowSignOut(false)
+              }, 5000)
+        }
+    }, [showSignOut])
+
     return (
         <nav className="sticky">
-            <Link to='/login' className='routerLink'>
-                <button className="navButton">
-                    <FontAwesomeIcon icon={faTwitter} id="marginBird" className="" />
-                </button>
-
-            </Link>
+            <button className="navButton" id="marginBirdButton" onMouseLeave={closeShowSignOut}>
+                <FontAwesomeIcon icon={faTwitter} id="marginBird" className="" onClick={toggleShowSignOut}/>
+                {showSignOut ? 
+                <p id="signOut" onClick={signOut}>Sign Out</p>
+                :
+                null
+            }
+                
+            </button>
             <Link to='/home' onClick={() => setFireApiCall(prev => prev + 1)} className='routerLink'>
                 <button className='navButton'>
                     <FontAwesomeIcon icon={faHouse} className="" />
-                    <p>Home</p>
+                    <p className="navButtonLabel">Home</p>
                 </button>
             </Link>
             <Link to={`/profile/${user.userObj._id}`} onClick={() => setFireApiCall(prev => prev + 1)} className='routerLink'>
                 <button className='navButton'>
                     <FontAwesomeIcon icon={faUser} className="" />
-                    <p>Profile</p>
+                    <p className="navButtonLabel">Profile</p>
                 </button>
             </Link>
             <Link to='/explore' onClick={() => setFireApiCall(prev => prev + 1)} className='routerLink'>
                 <button className='navButton'>
                     <FontAwesomeIcon icon={faHashtag} className="" />
-                    <p>Explore</p>
+                    <p className="navButtonLabel">Explore</p>
                 </button>
             </Link>
         </nav>

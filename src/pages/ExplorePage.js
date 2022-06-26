@@ -28,7 +28,7 @@ const ExplorePage = (props) => {
             navigate('/login')
         } else {
             setUser(getUser())
-            fetchTweets(displayCount)
+            fetchTweets(displayCount, user, false)
                 .then(tweetsArray => {
                     setTweets(tweetsArray)
                     setLoaded(true)

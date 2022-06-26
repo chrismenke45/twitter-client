@@ -3,7 +3,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  useNavigate
+  Navigate
 } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
@@ -12,6 +12,7 @@ import LoginPage from "./pages/LoginPage";
 import SetCredentials from "./components/SetCredentials";
 import TweetPage from "./pages/TweetPage";
 import ExplorePage from "./pages/ExplorePage";
+import ErrorPage from "./pages/ErrorPage";
 
 
 import getUser from "./functions/getUser";
@@ -29,7 +30,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route
-          path='*'
+          path='/'
+          element={
+            <Navigate to="home" />
+          }>
+        </Route>
+        <Route
+          path='/home'
           element={<HomePage
             tweets={tweets}
             setTweets={setTweets}
@@ -87,6 +94,11 @@ function App() {
         <Route
           path="/set-credentials"
           element={<SetCredentials />}>
+        </Route>
+        <Route
+          path="*"
+          element={<ErrorPage />}
+        >
         </Route>
       </Routes>
     </BrowserRouter>

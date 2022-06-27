@@ -14,7 +14,7 @@ let navigate = useNavigate()
     useEffect(() => {
         localStorage.setItem('twitterCloneJWT', getCookie('jwt'))
         localStorage.setItem('twitterCloneUser', decodeURIComponent(getCookie('user')))
-        //navigate('/')
+        navigate('/')
     }, []);
     return (
         <div className="fade-in-text">

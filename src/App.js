@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
-  BrowserRouter,
+  //BrowserRouter,
+  HashRouter,
   Routes,
   Route,
   Navigate
@@ -27,7 +28,7 @@ function App() {
 
 
   return (
-    <BrowserRouter basename='/twitter-client'>
+    <HashRouter basename='/twitter-client'>
       <Routes>
         <Route
           path='/'
@@ -101,7 +102,7 @@ function App() {
         >
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
 
 
   );

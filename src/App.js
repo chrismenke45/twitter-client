@@ -27,16 +27,16 @@ function App() {
 
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/twitter-client'>
       <Routes>
         <Route
           path='/'
           element={
-            <Navigate to="/twitter-client/home" />
+            <Navigate to="/home" />
           }>
         </Route>
         <Route
-          path='/twitter-client/home'
+          path='/home'
           element={<HomePage
             tweets={tweets}
             setTweets={setTweets}
@@ -49,7 +49,7 @@ function App() {
           />}>
         </Route>
         <Route
-          path="/twitter-client/profile/:profileid"
+          path="/profile/:profileid"
           element={<ProfilePage
             tweets={tweets}
             setTweets={setTweets}
@@ -62,7 +62,7 @@ function App() {
           />}>
         </Route>
         <Route
-          path="/twitter-client/tweet/:tweetid"
+          path="/tweet/:tweetid"
           element={<TweetPage
             tweets={tweets}
             setTweets={setTweets}
@@ -75,7 +75,7 @@ function App() {
           />}>
         </Route>
         <Route
-          path='/twitter-client/explore'
+          path='/explore'
           element={<ExplorePage
             tweets={tweets}
             setTweets={setTweets}
@@ -88,15 +88,15 @@ function App() {
           />}>
         </Route>
         <Route
-          path="/twitter-client/login"
+          path="/login"
           element={<LoginPage />}>
         </Route>
         <Route
-          path="/twitter-client/set-credentials"
+          path="/set-credentials"
           element={<SetCredentials />}>
         </Route>
         <Route
-          path="/twitter-client/*"
+          path="/*"
           element={<ErrorPage />}
         >
         </Route>

@@ -22,7 +22,7 @@ const HomePage = (props) => {
     const [loaded, setLoaded] = useState(false)
     const [displayCount, setDisplayCount] = useState(12)
     const [showUnable, setShowUnable] = useState(false)
-
+    
     useEffect(() => {
         if (!checkForUser(getUser())) {
             navigate('/login')

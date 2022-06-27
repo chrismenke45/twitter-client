@@ -1,7 +1,6 @@
 const timeFinder = (time) => {
     let currentTime = new Date();
     let postTime = new Date(time);
-    console.log(currentTime, postTime)
     if (currentTime.getDate() === postTime.getDate() && currentTime.getFullYear() === postTime.getFullYear() && currentTime.getMonth() === postTime.getMonth()) {
         if (currentTime.getHours() === postTime.getHours()) {
             if (currentTime.getTime() - postTime.getTime() < 60000) {

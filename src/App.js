@@ -1,3 +1,6 @@
+//REACT_APP_developmentAPIurl="https://immense-chamber-84667.herokuapp.com"
+// /REACT_APP_developmentAPIurl="http://localhost:5000"
+
 import { useState, useEffect } from "react";
 import {
   BrowserRouter,
@@ -25,19 +28,19 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const [fireApiCall, setFireApiCall] = useState(0)
 
-
+{/*basename='/twitter-client'*/}
 
   return (
-    <BrowserRouter basename='/twitter-client'>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route
-          path='/'
+          exact path='/'
           element={
             <Navigate to="/home" />
           }>
         </Route>
         <Route
-          path='/home'
+          exact path='/home'
           element={<HomePage
             tweets={tweets}
             setTweets={setTweets}
@@ -50,7 +53,7 @@ function App() {
           />}>
         </Route>
         <Route
-          path="/profile/:profileid"
+          exact path="/profile/:profileid"
           element={<ProfilePage
             tweets={tweets}
             setTweets={setTweets}
@@ -63,7 +66,7 @@ function App() {
           />}>
         </Route>
         <Route
-          path="/tweet/:tweetid"
+          exact path="/tweet/:tweetid"
           element={<TweetPage
             tweets={tweets}
             setTweets={setTweets}
@@ -76,7 +79,7 @@ function App() {
           />}>
         </Route>
         <Route
-          path='/explore'
+          exact path='/explore'
           element={<ExplorePage
             tweets={tweets}
             setTweets={setTweets}
@@ -89,17 +92,23 @@ function App() {
           />}>
         </Route>
         <Route
-          path="/login"
+          exact path="/login"
           element={<LoginPage />}>
         </Route>
         <Route
-          path="/set-credentials"
+          exact path="/set-credentials"
           element={<SetCredentials />}>
         </Route>
         <Route
-          path="/*"
+          path="/error"
           element={<ErrorPage />}
         >
+        </Route>
+        <Route
+          path='/*'
+          element={
+            <Navigate to="/error" />
+          }>
         </Route>
       </Routes>
     </BrowserRouter>

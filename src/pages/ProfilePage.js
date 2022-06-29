@@ -38,6 +38,7 @@ const ProfilePage = (props) => {
                 .then(responses => {
                     setProfile(responses[0]);
                     setTweets(responses[1]);
+                    console.log(responses[1])
                     setInternalLoaded(true)
                     setLoaded(true)
                 })

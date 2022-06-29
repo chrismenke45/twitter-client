@@ -34,6 +34,7 @@ const TweetPage = (props) => {
                 .then(responses => {
                     setTheTweet(responses[0]);
                     setTweets(responses[1]);
+                    console.log(responses[1])
                     setLoaded(true)
                 })
                 .catch(err => {

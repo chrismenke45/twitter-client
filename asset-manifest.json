@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/twitter-client/static/css/main.e308f1be.css",
-    "main.js": "/twitter-client/static/js/main.99de6e5b.js",
-    "index.html": "/twitter-client/index.html",
-    "main.e308f1be.css.map": "/twitter-client/static/css/main.e308f1be.css.map",
-    "main.99de6e5b.js.map": "/twitter-client/static/js/main.99de6e5b.js.map"
+    "main.css": "https://chrismenke45.github.io/twitter-clone/static/css/main.e308f1be.css",
+    "main.js": "https://chrismenke45.github.io/twitter-clone/static/js/main.17b249de.js",
+    "index.html": "https://chrismenke45.github.io/twitter-clone/index.html",
+    "main.e308f1be.css.map": "https://chrismenke45.github.io/twitter-clone/static/css/main.e308f1be.css.map",
+    "main.17b249de.js.map": "https://chrismenke45.github.io/twitter-clone/static/js/main.17b249de.js.map"
   },
   "entrypoints": [
     "static/css/main.e308f1be.css",
-    "static/js/main.99de6e5b.js"
+    "static/js/main.17b249de.js"
   ]
 }

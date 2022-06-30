@@ -3,8 +3,8 @@
 
 import { useState, useEffect } from "react";
 import {
-  BrowserRouter,
-  //HashRouter,
+  //BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Navigate
@@ -31,7 +31,7 @@ function App() {
 {/*basename='/twitter-client'*/}
 //basename={process.env.PUBLIC_URL}
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route
           exact path='/'
@@ -111,7 +111,7 @@ function App() {
           }>
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
 
 
   );

@@ -29,9 +29,9 @@ function App() {
   const [fireApiCall, setFireApiCall] = useState(0)
 
 {/*basename='/twitter-client'*/}
-
+//basename={process.env.PUBLIC_URL}
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Routes>
         <Route
           exact path='/'

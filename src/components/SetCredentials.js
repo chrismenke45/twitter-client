@@ -28,7 +28,7 @@ function SetCredentials(props) {
                 console.log(tokenObj)
                 localStorage.setItem('twitterCloneJWT', tokenObj.token)
                 localStorage.setItem('twitterCloneUser', JSON.stringify(tokenObj.userObj))
-                navigate('/')
+                navigate('/#/home')
             })
         }
     }, [])

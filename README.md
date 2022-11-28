@@ -1,1 +1,1 @@
-This is the front end to my twitter clone.  It is fully responsive and looks great on phones, tablets and computer screens.  It interacts with the backend I made to manage all the tweets. You can view a live version of it here: https://chrismenke45.github.io/twitter-client
+This is the front end to my twitter clone.  It is fully responsive and looks great on phones, tablets and computer screens.  It interacts with the backend I made to manage all the tweets. You can view a live version of it here: https://chrismenke45.github.io/twitter-client 

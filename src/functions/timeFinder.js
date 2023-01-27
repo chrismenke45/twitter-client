@@ -18,7 +18,7 @@ const timeFinder = (time) => {
             return postTime.toLocaleString('en-US', { month: 'short', day: 'numeric' })
         }
     } else {
-        return postTime.toLocaleString('en-US', {timeZone: 'America/Los_Angeles'}, { month: 'short', day: 'numeric', year: 'numeric' })
+        return postTime.toLocaleString('en-US', {timeZone: 'America/Los_Angeles', month: 'short', day: 'numeric', year: 'numeric' })
     }
 }
 export default timeFinder

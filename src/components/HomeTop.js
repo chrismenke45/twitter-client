@@ -113,7 +113,7 @@ function HomeTop(props) {
 
             <div className="homeTopFooter">
                 <span className=''>
-                    <FontAwesomeIcon icon={faImage} onClick={imageButtonClick} className="blueText" />
+                    <FontAwesomeIcon icon={faImage} onClick={imageButtonClick} className="blueText" style={{ cursor: 'pointer' }}/>
                     <input name="img" type="file" onChange={handleImageChange} accept="image/png, image/jpeg" ref={imageButtonRef} hidden={true}></input>
                 </span>
                 <button type='submit' className='typicalButton'>Tweet</button>

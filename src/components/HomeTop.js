@@ -55,7 +55,7 @@ function HomeTop(props) {
         if (!checkForUser(user)) {
             return navigate('/login')
         }
-        if (tweetInfo.tweetText == '' && tweetInfo.img == null || tweetInfo.tweetText.trim().length === 0) {
+        if (tweetInfo.img == null && tweetInfo.tweetText.trim().length === 0) {
             return
         }
         else {

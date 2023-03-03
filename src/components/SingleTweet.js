@@ -165,7 +165,7 @@ function SingleTweet(props) {
                 null
             }
             <div data-yesnav={true} className="singleTweetHeader">
-                <div data-nonav={true} className="userPicContainer" data-nonav={true}>
+                <div data-nonav={true} className="userPicContainer">
                     <img src={tweet.author.profile_image} alt="no img" className="userPic" data-nonav={true}></img>
                 </div>
                 <div data-yesnav={true} className="tweetContent">

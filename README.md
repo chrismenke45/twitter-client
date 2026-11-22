@@ -1,5 +1,5 @@
 # Twitter Clone Front End
-This is the front end of my [twitter clone](https://chrismenke45.github.io/twitter-client) made with React:
+This is the front end of my twitter clone<!--[twitter clone](https://chrismenke45.github.io/twitter-client)--> made with React:
 ![desktop](https://user-images.githubusercontent.com/86500980/223279307-b70d1a90-86d8-41c2-b6d5-9354d51794e9.png)
 <br />
 ## How it's made:
